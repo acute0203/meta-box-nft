@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="robots" content="all">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="copyright" content="META BOX">
+    <meta name="description" content="網頁敘述,會出現在google搜尋">
+    <meta name="distribution" content="Taiwan">
+    <meta name="geo.region" content="tw">
+
+    <!--FACEBOOK Share-->
+    <meta property="og:url" content="該網頁網址">
+    <meta property="og:title" content="META BOX">
+    <meta property="og:site_name" content="META BOX">
+    <meta property="og:image" content="img/META-BOX.png">
+    <meta property="og:description" content="網頁敘述">
+    <meta property="og:type" content="website">
+    <!--FACEBOOK Share-->
+
+    <link rel="icon" href="img/favicon.ico">
+
+    <!--主要CSS-->
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/style.css?version=1.1" rel="stylesheet">
+    <link href="css/aos.css" rel="stylesheet">
+
+    <title>META BOX</title>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.ethers.io/lib/ethers-5.6.umd.min.js" type="text/javascript">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+let provider = null;
+if (window.ethereum !== undefined){
+provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+}
+const toAddress = "0x5c34903312069a232E6c184fb996Ab31D20aF2c4";//"0xf3B1bE6C9c9c63365931B803909703154Ed2b4c0";
+async function showNFTID(id){
+
+Swal.fire({
+  icon: 'info',
+  title: 'NFT ID:',
+  html: id,
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Copy Contract Address'
+}).then((result) => {
+if (result.isConfirmed) {
+navigator.clipboard.writeText(toAddress);
+Swal.fire(
+  'Copied!',
+  'Contract Address have been copied into clipboard!',
+  'success'
+)
+}
+})
+}
+
+async function getUserNFTIDList(){
+const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+const account = accounts[0];
+const abi = [
+    "event MintID(uint256)",
+    "function buyNFTWithEther() external payable returns (uint256)",
+    "function getUserNFTIDList() public view returns(uint256[] memory)",
+    "function getOwnerNFTIDList() public view returns(uint256[] memory)"
+];
+const signer = provider.getSigner();
+const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
+let tx = await erc1155_rw.getUserNFTIDList({from: account});
+const nftListString = tx.toString();
+let newList = [];
+nftListString.split(",").forEach(element => {
+    if (element!=='0'){
+        newList.push(element);
+    }
+});
+return newList.join(",");
+
+}
+
+async function getOwnerNFTIDList(){
+const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+const account = accounts[0];
+const abi = [
+    "event MintID(uint256)",
+    "function buyNFTWithEther() external payable returns (uint256)",
+    "function getUserNFTIDList() public view returns(uint256[] memory)",
+    "function getOwnerNFTIDList() public view returns(uint256[] memory)"
+];
+const signer = provider.getSigner();
+const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
+let tx = await erc1155_rw.getOwnerNFTIDList({from: account});
+const nftListString = tx.toString();
+let newList = [];
+nftListString.split(",").forEach(element => {
+    if (element!=='0'){
+        newList.push(element);
+    }
+});
+return newList.join(",");
+
+}
+
+async function buyNFT(id){
+console.log("buyNFT!");
+
+if(window.ethereum === undefined){
+Swal.fire({
+  title: 'Please choose a wallet to connect:',
+  html: '<div class="trustLink"><center><img src="img/trust-wallet-seeklogo.com.svg" style="display:block;width:330px;height:240px" /></center></div><hr><div class="metaLink"><center><img src="img/metamask-seeklogo.com.svg" style="display:block;width:330px;height:240px" /></center></div>',
+  showCancelButton: false, // There won't be any cancel button
+  showConfirmButton: false // There won't be any confirm button
+})
+} else {
+const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+const account = accounts[0];
+// Prompt user for account connections
+await provider.send("eth_requestAccounts", []);
+const signer = provider.getSigner();
+console.log("Account:", await signer.getAddress());
+var projectId = "695945a222de4a8082d28507506f3f37";
+var projectSecret = "08b9d559fba740a0a9bb41a8c747174d";
+var providera = new ethers.providers.InfuraProvider("ropsten", {
+projectId: projectId,
+projectSecret: projectSecret
+});
+
+const abi = [
+"event MintID(uint256)",
+"function buyNFTWithEther(uint256 buyID) external payable returns (uint256)",
+"function getUserNFTIDList() public view returns(uint256[] memory)",
+"function getNFTPrice(uint256 tokenID) public view returns (uint256)"
+];
+
+const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
+const amount = await erc1155_rw.getNFTPrice(id,{from: account});
+let tx = await erc1155_rw.buyNFTWithEther(id,{from: account,value: amount});
+Swal.fire({
+icon: 'warning',
+title: 'You have sent a request to mint a META WHISKY NFT!',
+html: '<div>Tx Hash:'+tx.hash+'</div><div>Please wait for a while for the transaction success.</div>',
+})
+console.log(tx.hash);
+getMintResult(tx, toAddress);
+}
+
+}
+
+async function getMintResult(tx, toAddress){
+let receipt = await tx.wait();
+let MintIDEvent = receipt.events.pop();
+let mintID = MintIDEvent.args[0];
+Swal.fire({
+  icon: 'success',
+  title: 'You have successfully buy META WHISKY NFT Token!',
+  html: '<br>Contract Address:'+toAddress+'<br>Token ID:'+mintID.toString(),
+})
+console.log("mintID:",mintID.toString());
+}
+
+$(document).on('click', '.trustLink', function() {
+console.log('trustLink');
+window.location = "https://link.trustwallet.com/open_url?coin_id=60&url=https://acute0203.github.io/meta-whisky-nft/";
+});
+$(document).on('click', '.metaLink', function() {
+console.log('metaLink');
+window.location = "https://metamask.app.link/dapp/acute0203.github.io/meta-whisky-nft/";
+});
+
+$(document).on('click', '.item-btn', function() {
+    var clickedID = $(this).attr('id').replace("item-","");
+    buyNFT(clickedID);
+});
+
+setInterval(async function () {
+if (window.ethereum !== undefined){
+const nftListString = await getUserNFTIDList();
+const ownerNFTIDStr = await getOwnerNFTIDList();
+const ownerNFTIDList = ownerNFTIDStr.split(",");
+const userNFTIDList = nftListString.split(",");
+await getNFTPrice();
+
+ownerNFTIDList.forEach(id=>{
+    $("#item-"+id).each(function(){
+        //$(this).css("display", "none");
+        $(this).attr('name', "Buy");
+        $(this).attr('value', "Buy");
+        $(this).css("background", "linear-gradient(to right, "
+        + "#3b73a1"
+        + ", "
+        + "#5e8fb4"
+        + ")")
+        $(this).attr('disabled',false);
+
+});
+})
+console.log(userNFTIDList);
+userNFTIDList.forEach(id=>{
+    $("#item-"+id).each(function(){
+        //$(this).css("display", "none");
+        $(this).attr('name', "Owned NFT!");
+        $(this).attr('value', "Owned NFT!");
+        $(this).css("background", "#ba4369")
+        $(this).attr('disabled',false);
+        $(this).attr('onclick', "showNFTID('"+id+"')");
+
+});
+$("#price-"+id).each(function(){
+    $(this).css("display", "none");
+    $(this).html("");
+});
+
+$("#icon-"+id).each(function(){
+    $(this).css("display", "none");
+    $(this).html("");
+});
+
+})
+}
+}, 3000);
+
+async function getNFTPrice(){
+const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+const account = accounts[0];
+const abi = [
+    "function getNFTPrice(uint256 tokenID) public view returns (uint256)"
+];
+const signer = provider.getSigner();
+const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
+for (var i=1;i<11;i++){
+let tx = await erc1155_rw.getNFTPrice(i,{from: account});
+const nftListString = tx.toString();
+//console.log(i,ethers.utils.formatEther(nftListString));
+$("#price-"+i).html(ethers.utils.formatEther(nftListString));
+}
+}
+
+</script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <article class="header">
+                <div class="logo" data-aos="fade-down" data-aos-duration="600"><img src="img/METABOX.svg"><span>NFT
+                        Marketplace</span></div>
+                <a href="#" class="member" data-aos="fade-down" data-aos-duration="600"><img
+                        src="img/member.svg"><span>My Page</span></a>
+            </article>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <h1 class="NFT-title" data-aos="fade-up" data-aos-duration="800">
+                NFT Collection
+            </h1>
+            <article class="NFT-grid">
+                <!--1組 Start-->
+                <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="item-body">
+                        <div class="item-img-mask">
+                            <img src="img/img_1.jpg" class="item-img">
+                        </div>
+                        <div class="item-text">
+                            <div>
+                                <div class="author">Seller name</div>
+                                <div class="name">RICARDO</div>
+                            </div>
+                            <div class="price"><img id="icon-1" src="img/coin.svg"><span class="ETH" id="price-1">56</span></div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <input type="button" value="Buy" name="Buy" class="item-btn" id="item-1">
+                    </div>
+                </div>
+                <!--1組 End-->
+                <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="item-body">
+                        <div class="item-img-mask">
+                            <img src="img/img_2.jpg" class="item-img">
+                        </div>
+                        <div class="item-text">
+                            <div>
+                                <div class="author">Seller name</div>
+                                <div class="name">かねしろ たけし</div>
+                            </div>
+                            <div class="price"><img id="icon-1" src="img/coin.svg"><span class="ETH" id="price-2">10.34</span></div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <input type="button" value="Buy" name="Buy" class="item-btn" id="item-2">
+                    </div>
+                </div>
+                <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="item-body">
+                        <div class="item-img-mask">
+                            <img src="img/img_3.jpg" class="item-img">
+                        </div>
+                        <div class="item-text">
+                            <div>
+                                <div class="author">Seller name</div>
+                                <div class="name">Green Girl</div>
+                            </div>
+                            <div class="price"><img id="icon-1" src="img/coin.svg"><span class="ETH" id="price-3">15</span></div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <input type="button" value="Sold" name="Sold" class="item-btn" id="item-3">
+                    </div>
+                </div>
+                <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="item-body">
+                        <div class="item-img-mask">
+                            <img src="img/img_4.jpg" class="item-img">
+                        </div>
+                        <div class="item-text">
+                            <div>
+                                <div class="author">Seller name</div>
+                                <div class="name">Blue & Orange & White</div>
+                            </div>
+                            <div class="price"><img id="icon-1" src="img/coin.svg"><span class="ETH" id="price-4">3.66</span></div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <input type="button" value="Sold" name="Sold" class="item-btn" id="item-4">
+                    </div>
+                </div>
+                <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="item-body">
+                        <div class="item-img-mask">
+                            <img src="img/img_5.jpg" class="item-img">
+                        </div>
+                        <div class="item-text">
+                            <div>
+                                <div class="author">Seller name</div>
+                                <div class="name">ROMARIO</div>
+                            </div>
+                            <div class="price"><img id="icon-1" src="img/coin.svg"><span class="ETH" id="price-5">0.52</span></div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <input type="button" value="Buy" name="Buy" class="item-btn" id="item-5">
+                    </div>
+                </div>
+                <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="item-body">
+                        <div class="item-img-mask">
+                            <img src="img/img_5.jpg" class="item-img">
+                        </div>
+                        <div class="item-text">
+                            <div>
+                                <div class="author">Seller name</div>
+                                <div class="name">富嶽三十六景 神奈川沖浪</div>
+                            </div>
+                            <div class="price"><img id="icon-1" src="img/coin.svg"><span class="ETH" id="price-6">0.09</span></div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <input type="button" value="Sold" name="Sold" class="item-btn" id="item-6">
+                    </div>
+                </div>
+                <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="item-body">
+                        <div class="item-img-mask">
+                            <img src="img/img_4.jpg" class="item-img">
+                        </div>
+                        <div class="item-text">
+                            <div>
+                                <div class="author">Seller name</div>
+                                <div class="name">あきご</div>
+                            </div>
+                            <div class="price"><img id="icon-1" src="img/coin.svg"><span class="ETH" id="price-7">12.1</span></div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <input type="button" value="Buy" name="Buy" class="item-btn" id="item-7">
+                    </div>
+                </div>
+                <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="item-body">
+                        <div class="item-img-mask">
+                            <img src="img/img_3.jpg" class="item-img">
+                        </div>
+                        <div class="item-text">
+                            <div>
+                                <div class="author">Seller name</div>
+                                <div class="name">暁五</div>
+                            </div>
+                            <div class="price"><img id="icon-1" src="img/coin.svg"><span class="ETH" id="price-8">0.66</span></div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <input type="button" value="Sold" name="Sold" class="item-btn" id="item-8">
+                    </div>
+                </div>
+                <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="item-body">
+                        <div class="item-img-mask">
+                            <img src="img/img_2.jpg" class="item-img">
+                        </div>
+                        <div class="item-text">
+                            <div>
+                                <div class="author">Seller name</div>
+                                <div class="name">아키고</div>
+                            </div>
+                            <div class="price"><img id="icon-1" src="img/coin.svg"><span class="ETH" id="price-9">0.76</span></div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <input type="button" value="Buy" name="Buy" class="item-btn" id="item-9">
+                    </div>
+                </div>
+                <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="item-body">
+                        <div class="item-img-mask">
+                            <img src="img/img_1.jpg" class="item-img">
+                        </div>
+                        <div class="item-text">
+                            <div>
+                                <div class="author">Seller name</div>
+                                <div class="name">Akigo</div>
+                            </div>
+                            <div class="price"><img id="icon-1" src="img/coin.svg"><span class="ETH" id="price-10">1.15</span></div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <input type="button" value="Sold" name="Sold" class="item-btn" id="item-10">
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+    <footer>© 2022 Metabox. </footer>
+    <script src="js/script.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
