@@ -163,11 +163,11 @@ Swal.fire({
 
 $(document).on('click', '.trustLink', function() {
 console.log('trustLink');
-window.location = "https://link.trustwallet.com/open_url?coin_id=60&url=https://acute0203.github.io/meta-whisky-nft/";
+window.location = "https://link.trustwallet.com/open_url?coin_id=60&url=https://acute0203.github.io/meta-box-nft/";
 });
 $(document).on('click', '.metaLink', function() {
 console.log('metaLink');
-window.location = "https://metamask.app.link/dapp/acute0203.github.io/meta-whisky-nft/";
+window.location = "https://metamask.app.link/dapp/acute0203.github.io/meta-box-nft/";
 });
 
 $(document).on('click', '.item-btn', function() {
@@ -180,7 +180,7 @@ $(document).on('click', '.item-btn', function() {
 
 });
 
-setInterval(async function () {
+var intervalId = setInterval(async function () {
 if (window.ethereum !== undefined){
 const nftListString = await getUserNFTIDList();
 const ownerNFTIDStr = await getOwnerNFTIDList();
@@ -223,6 +223,14 @@ $("#icon-"+id).each(function(){
 });
 
 })
+} else {
+    Swal.fire({
+      title: 'Please choose a wallet to connect:',
+      html: '<div class="trustLink"><center><img src="img/trust-wallet-seeklogo.com.svg" style="display:block;width:330px;height:240px" /></center></div><hr><div class="metaLink"><center><img src="img/metamask-seeklogo.com.svg" style="display:block;width:330px;height:240px" /></center></div>',
+      showCancelButton: false, // There won't be any cancel button
+      showConfirmButton: false // There won't be any confirm button
+    })
+    clearInterval(intervalId);
 }
 }, 3000);
 
