@@ -142,7 +142,7 @@ const amount = await erc1155_rw.getNFTPrice(id,{from: account});
 let tx = await erc1155_rw.buyNFTWithEther(id,{from: account,value: amount});
 Swal.fire({
 icon: 'warning',
-title: 'You have sent a request to mint a META WHISKY NFT!',
+title: 'You have sent a request to mint a META Box NFT!',
 html: '<div>Tx Hash:'+tx.hash+'</div><div>Please wait for a while for the transaction success.</div>',
 })
 console.log(tx.hash);
@@ -157,10 +157,8 @@ let MintIDEvent = receipt.events.pop();
 let mintID = MintIDEvent.args[0];
 Swal.fire({
   icon: 'success',
-  title: 'You have successfully buy META WHISKY NFT Token!',
-  html: '<br>Contract Address:'+toAddress+'<br>Token ID:'+mintID.toString(),
+  title: 'You have successfully buy META Box NFT Token!'
 })
-console.log("mintID:",mintID.toString());
 }
 
 $(document).on('click', '.trustLink', function() {
@@ -174,7 +172,12 @@ window.location = "https://metamask.app.link/dapp/acute0203.github.io/meta-whisk
 
 $(document).on('click', '.item-btn', function() {
     var clickedID = $(this).attr('id').replace("item-","");
-    buyNFT(clickedID);
+    if($(this).attr("value") === "Owned NFT!"){
+        showNFTID(clickedID)
+    }else{
+        buyNFT(clickedID);
+    };
+
 });
 
 setInterval(async function () {
