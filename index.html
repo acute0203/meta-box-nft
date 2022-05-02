@@ -60,6 +60,17 @@ Swal.fire(
 })
 }
 
+async function getUserBalance(){
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const account = accounts[0];
+    let userBalance = 0;
+    provider.getBalance(account).then(async (balance) =>  {
+     // convert a currency unit from wei to ether
+     userBalance = await ethers.utils.formatEther(balance);
+
+    })
+    return userBalance;
+}
 async function getUserNFTIDList(){
 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
 const account = accounts[0];
@@ -139,14 +150,25 @@ const abi = [
 
 const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
 const amount = await erc1155_rw.getNFTPrice(id,{from: account});
-let tx = await erc1155_rw.buyNFTWithEther(id,{from: account,value: amount});
-Swal.fire({
-icon: 'warning',
-title: 'You have sent a request to mint a META Box NFT!',
-html: '<div>Tx Hash:'+tx.hash+'</div><div>Please wait for a while for the transaction success.</div>',
-})
-console.log(tx.hash);
-getMintResult(tx, toAddress);
+try {
+    let tx = await erc1155_rw.buyNFTWithEther(id,{from: account,value: amount});
+    Swal.fire({
+    icon: 'warning',
+    title: 'You have sent a request to mint a META Box NFT!',
+    html: '<div>Tx Hash:'+tx.hash+'</div><div>Please wait for a while for the transaction success.</div>',
+    })
+    console.log(tx.hash);
+    getMintResult(tx, toAddress);
+} catch (err) {
+      Swal.fire({
+      icon: 'error',
+      title: 'Error message:',
+      html: '<div>'+err.reason+'</div>',
+      })
+      console.log(err);
+
+}
+
 }
 
 }
@@ -170,8 +192,10 @@ console.log('metaLink');
 window.location = "https://metamask.app.link/dapp/acute0203.github.io/meta-box-nft/";
 });
 
-$(document).on('click', '.item-btn', function() {
+$(document).on('click', '.item-btn', async function() {
     var clickedID = $(this).attr('id').replace("item-","");
+    var userBalance =  await getUserBalance();
+    console.log(userBalance);
     if($(this).attr("value") === "Owned NFT!"){
         showNFTID(clickedID)
     }else{
@@ -246,7 +270,16 @@ for (var i=1;i<11;i++){
 let tx = await erc1155_rw.getNFTPrice(i,{from: account});
 const nftListString = tx.toString();
 //console.log(i,ethers.utils.formatEther(nftListString));
+if (!nftListString.endsWith("39935"))
 $("#price-"+i).html(ethers.utils.formatEther(nftListString));
+else{
+    $("#price-"+i).html("");
+    $("#icon-"+i).each(function(){
+        $(this).css("display", "none");
+        $(this).html("");
+    });
+}
+
 }
 }
 
