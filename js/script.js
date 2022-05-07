@@ -4,6 +4,7 @@ for (a = 0; a < itemBtn.length; a++) {
     itemBtn[a].value = "Sold";
     itemBtn[a].style.background = "#999999";
     itemBtn[a].disabled = true;
+    itemBtn[a].style.display = "none";
     /*
     if (itemBtn[a].name == "Buy") {
         itemBtn[a].style.background =
