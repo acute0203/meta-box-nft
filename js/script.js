@@ -1,10 +1,10 @@
 let itemBtn = document.querySelectorAll(".item-btn");
 for (a = 0; a < itemBtn.length; a++) {
-    itemBtn[a].name = "Sold";
-    itemBtn[a].value = "Sold";
-    itemBtn[a].style.background = "#999999";
+    itemBtn[a].name = "SOLD";
+    itemBtn[a].value = "SOLD";
+    itemBtn[a].style.background = "#ba4369";
     itemBtn[a].disabled = true;
-    itemBtn[a].style.display = "none";
+    //itemBtn[a].style.display = "none";
     /*
     if (itemBtn[a].name == "Buy") {
         itemBtn[a].style.background =

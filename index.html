@@ -464,7 +464,7 @@ $(document).on('click', '.item-btn', async function() {
     var clickedID = $(this).attr('id').replace("item-","");
     var userBalance =  await getUserBalance();
     console.log(userBalance);
-    if($(this).attr("value") === "Owned NFT!"){
+    if($(this).attr("value") === "OWNER"){
         showNFTID(clickedID)
     }else{
         buyNFT(clickedID);
@@ -527,8 +527,8 @@ await getNFTPrice();
 ownerNFTIDList.forEach(id=>{
     $("#item-"+id).each(function(){
         //$(this).css("display", "none");
-        $(this).attr('name', "Buy");
-        $(this).attr('value', "Buy");
+        $(this).attr('name', "BUY");
+        $(this).attr('value', "BUY");
         $(this).css("background", "linear-gradient(to right, "
         + "#3b73a1"
         + ", "
@@ -545,8 +545,8 @@ $("#price-"+id).each(function(){
 userNFTIDList.forEach(id=>{
     $("#item-"+id).each(function(){
         //$(this).css("display", "none");
-        $(this).attr('name', "Owned NFT!");
-        $(this).attr('value', "Owned NFT!");
+        $(this).attr('name', "OWNER");
+        $(this).attr('value', "OWNER");
         $(this).css("background", "#ba4369")
         $(this).attr('disabled',false);
         $(this).attr('onclick', "showNFTID('"+id+"')");
