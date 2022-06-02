@@ -289,7 +289,68 @@ input[type=text]:placeholder,input[type=password]:placeholder {
    outline: none;
 }
 
+/*Light box*/
 
+#fade {
+  display: none;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: .80;
+  filter: alpha(opacity=80);
+}
+
+#light {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-height: 450px;
+  margin-left: -300px;
+  margin-top: -180px;
+  border: 2px solid #FFF;
+  background: #FFF;
+  z-index: 1002;
+  overflow: visible;
+  padding: 15px;
+  border-radius:12px;
+}
+
+#boxclose {
+  float: right;
+  cursor: pointer;
+  color: #fff;
+  border: 1px solid #AEAEAE;
+  border-radius: 3px;
+  background: #222222;
+  font-size: 31px;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 0px;
+  padding: 11px 3px;
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  z-index: 1002;
+  opacity: 0.9;
+}
+
+.boxclose:before {
+  content: "×";
+}
+
+#fade:hover ~ #boxclose {
+  display:none;
+}
+
+.test:hover ~ .test2 {
+  display: none;
+}
 
     </style>
     <title>META BOX</title>
@@ -614,6 +675,78 @@ $( document ).ready(function() {
 });
 
 </script>
+
+<script>
+window.document.onkeydown = function(e) {
+  if (!e) {
+    e = event;
+  }
+  if (e.keyCode == 27) {
+    lightbox_close();
+  }
+}
+
+function lightbox_open(video_id) {
+        var parent = document.getElementById("VisaChipCardVideo");
+        if (parent !== null){
+            while (parent.firstChild) {
+         			parent.firstChild.remove()
+        		}
+        }
+        var source = document.createElement('source');
+        source.setAttribute('src', "/video/"+video_id+"/"+video_id+".mp4");
+        source.setAttribute('type', 'video/mp4');
+        source.setAttribute('id', 'video_src');
+        var lightBoxVideo = document.getElementById("VisaChipCardVideo");
+        lightBoxVideo.appendChild(source);
+        window.scrollTo(0, 0);
+        document.getElementById('light').style.display = 'block';
+        document.getElementById('fade').style.display = 'block';
+        lightBoxVideo.load();
+        lightBoxVideo.play();
+        var lightBoxDescription = document.getElementById("VisaChipCardDescription");
+        var text = "";
+        switch (video_id) {
+          case 1:
+            text = "金城農園の無農薬もやしの引換券となります。";
+            break;
+          case 2:
+            text = "沖縄県の大宜味村の開拓権利となります。";
+            break;
+          case 3:
+            text = "田中農場のアグー豚１頭の交換券となります。";
+            break;
+          case 4:
+            text = "サイトウ農場の石垣牛の牛タン引換券No.3495となります。";
+            break;
+          case 5:
+            text = "佐藤農園の有機栽培ゴーヤ2kg交換券となります。";
+            break;
+          case 6:
+            text = "数量限定の紅イモタルト10箱交換券となります。";
+            break;
+          case 7:
+            text = "山本工芸の琉球グラスの交換券となります。";
+            break;
+          case 8:
+            text = "宮代水産の天然もずく1kgの交換券となります。";
+            break;
+          case 9:
+            text = "ヤンバル製菓の限定ちんすこう交換券となります。";
+            break;
+          case 10:
+            text = "ちばりよ水産の天然海ぶどう交換券となります。";
+            break;
+        }
+        lightBoxDescription.innerHTML = text;
+}
+function lightbox_close() {
+  var lightBoxVideo = document.getElementById("VisaChipCardVideo");
+  document.getElementById('light').style.display = 'none';
+  document.getElementById('fade').style.display = 'none';
+  lightBoxVideo.pause();
+}
+</script>
 </head>
 
 <body>
@@ -642,26 +775,38 @@ $( document ).ready(function() {
                 <article class="header">
                     <div class="logo" data-aos="fade-down" data-aos-duration="600"><img src="img/METABOX.svg"><span>NFT
                             Marketplace</span></div>
-                    <a href="#" class="member" data-aos="fade-down" data-aos-duration="600"><img src="img/member.svg"><span>My Page</span></a>
                 </article>
             </div>
         </header>
         <main>
+
+
             <div class="container">
+                <div id="light" >
+
+                <a class="boxclose" id="boxclose" onclick="lightbox_close();"></a>
+                  <video id="VisaChipCardVideo" width="600" controls>
+                      <!--<source id="video_url" src="" type="video/mp4">-->
+                      <!--Browser does not support <video> tag -->
+                    </video>
+                    <div id="VisaChipCardDescription" style="text-align: center"></div>
+                  </div>
+
+                <div id="fade" onClick="lightbox_close();"></div>
                 <h1 class="NFT-title" data-aos="fade-up" data-aos-duration="800">
                     NFT Collection
                 </h1>
                 <article class="NFT-grid">
                     <!--1組 Start-->
                     <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="item-body">
+                        <div class="item-body" onclick="lightbox_open(1);">
                             <div class="item-img-mask">
-                                <img src="img/img_1.jpeg" class="item-img">
+                                <img src="video/1/1.png" class="item-img">
                             </div>
                             <div class="item-text">
                                 <div>
-                                    <div class="author">No.3495</div>
-                                    <div class="name">石垣牛タン引換券</div>
+                                    <div class="author">１kg引換券</div>
+                                    <div class="name">宮里農園もやし</div>
                                 </div>
                                 <div class="price"><img id="icon-1" src="img/coin.svg"><span class="" id="price-1">56</span></div>
                             </div>
@@ -671,15 +816,15 @@ $( document ).ready(function() {
                         </div>
                     </div>
                     <!--1組 End-->
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="item-body">
+                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
+                        <div class="item-body" onclick="lightbox_open(2);">
                             <div class="item-img-mask">
-                                <img src="img/img_2.jpeg" class="item-img">
+                                <img src="video/2/2.png" class="item-img">
                             </div>
                             <div class="item-text">
                                 <div>
-                                    <div class="author">１kg引換券</div>
-                                    <div class="name">宮里農園もやし</div>
+                                    <div class="author">開拓権利</div>
+                                    <div class="name">大宜見村</div>
                                 </div>
                                 <div class="price"><img id="icon-2" src="img/coin.svg"><span class="" id="price-2">10.34</span></div>
                             </div>
@@ -688,15 +833,15 @@ $( document ).ready(function() {
                             <input type="button" value="Buy" name="Buy" class="item-btn" id="item-2">
                         </div>
                     </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="item-body">
+                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
+                        <div class="item-body" onclick="lightbox_open(3);">
                             <div class="item-img-mask">
-                                <img src="img/img_3.jpeg" class="item-img">
+                                <img src="video/3/3.png" class="item-img">
                             </div>
                             <div class="item-text">
                                 <div>
-                                    <div class="author">開拓権利</div>
-                                    <div class="name">大宜見村</div>
+                                    <div class="author">1頭更換券</div>
+                                    <div class="name">アグー豚</div>
                                 </div>
                                 <div class="price"><img id="icon-3" src="img/coin.svg"><span class="" id="price-3">15</span></div>
                             </div>
@@ -705,15 +850,15 @@ $( document ).ready(function() {
                             <input type="button" value="Sold" name="Sold" class="item-btn" id="item-3">
                         </div>
                     </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="item-body">
+                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
+                        <div class="item-body" onclick="lightbox_open(4);">
                             <div class="item-img-mask">
-                                <img src="img/img_4.jpeg" class="item-img">
+                                <img src="video/4/4.png" class="item-img">
                             </div>
                             <div class="item-text">
                                 <div>
-                                    <div class="author">10箱</div>
-                                    <div class="name">限定紅芋タルト</div>
+                                    <div class="author">No.3495</div>
+                                    <div class="name">石垣牛タン引換券</div>
                                 </div>
                                 <div class="price"><img id="icon-4" src="img/coin.svg"><span class="" id="price-4">3.66</span></div>
                             </div>
@@ -722,15 +867,15 @@ $( document ).ready(function() {
                             <input type="button" value="Sold" name="Sold" class="item-btn" id="item-4">
                         </div>
                     </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="item-body">
+                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
+                        <div class="item-body" onclick="lightbox_open(5);">
                             <div class="item-img-mask">
-                                <img src="img/img_5.jpeg" class="item-img">
+                                <img src="video/5/5.png" class="item-img">
                             </div>
                             <div class="item-text">
                                 <div>
-                                    <div class="author">1㎏交換券</div>
-                                    <div class="name">天然もずく</div>
+                                    <div class="author">2㎏交換券</div>
+                                    <div class="name">佐藤農園ゴーヤ</div>
                                 </div>
                                 <div class="price"><img id="icon-5" src="img/coin.svg"><span class="" id="price-5">0.52</span></div>
                             </div>
@@ -739,15 +884,15 @@ $( document ).ready(function() {
                             <input type="button" value="Buy" name="Buy" class="item-btn" id="item-5">
                         </div>
                     </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="item-body">
+                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
+                        <div class="item-body" onclick="lightbox_open(6);">
                             <div class="item-img-mask">
-                                <img src="img/img_6.jpeg" class="item-img">
+                                <img src="video/6/6.png" class="item-img">
                             </div>
                             <div class="item-text">
                                 <div>
-                                    <div class="author">2㎏交換券</div>
-                                    <div class="name">佐藤農園ゴーヤ</div>
+                                    <div class="author">10箱</div>
+                                    <div class="name">限定紅芋タルト</div>
                                 </div>
                                 <div class="price"><img id="icon-6" src="img/coin.svg"><span class="" id="price-6">0.09</span></div>
                             </div>
@@ -756,15 +901,15 @@ $( document ).ready(function() {
                             <input type="button" value="Sold" name="Sold" class="item-btn" id="item-6">
                         </div>
                     </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="item-body">
+                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
+                        <div class="item-body" onclick="lightbox_open(7);">
                             <div class="item-img-mask">
-                                <img src="img/img_7.jpeg" class="item-img">
+                                <img src="video/7/7.png" class="item-img">
                             </div>
                             <div class="item-text">
                                 <div>
                                     <div class="author">交換券</div>
-                                    <div class="name">限定ちんすこう</div>
+                                    <div class="name">限定琉球グラス</div>
                                 </div>
                                 <div class="price"><img id="icon-7" src="img/coin.svg"><span class="" id="price-7">12.1</span></div>
                             </div>
@@ -773,15 +918,15 @@ $( document ).ready(function() {
                             <input type="button" value="Buy" name="Buy" class="item-btn" id="item-7">
                         </div>
                     </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="item-body">
+                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
+                        <div class="item-body" onclick="lightbox_open(8);">
                             <div class="item-img-mask">
-                                <img src="img/img_8.jpeg" class="item-img">
+                                <img src="video/8/8.png" class="item-img">
                             </div>
                             <div class="item-text">
                                 <div>
-                                    <div class="author">2㎏交換券</div>
-                                    <div class="name">海ぶどう</div>
+                                    <div class="author">1㎏交換券</div>
+                                    <div class="name">天然もずく</div>
                                 </div>
                                 <div class="price"><img id="icon-8" src="img/coin.svg"><span class="" id="price-8">0.66</span></div>
                             </div>
@@ -790,15 +935,15 @@ $( document ).ready(function() {
                             <input type="button" value="Sold" name="Sold" class="item-btn" id="item-8">
                         </div>
                     </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="item-body">
+                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
+                        <div class="item-body" onclick="lightbox_open(9);">
                             <div class="item-img-mask">
-                                <img src="img/img_9.jpeg" class="item-img">
+                                <img src="video/9/9.png" class="item-img">
                             </div>
                             <div class="item-text">
                                 <div>
                                     <div class="author">交換券</div>
-                                    <div class="name">限定琉球グラス</div>
+                                    <div class="name">限定ちんすこう</div>
                                 </div>
                                 <div class="price"><img id="icon-9" src="img/coin.svg"><span class="" id="price-9">0.76</span></div>
                             </div>
@@ -807,15 +952,15 @@ $( document ).ready(function() {
                             <input type="button" value="Buy" name="Buy" class="item-btn" id="item-9">
                         </div>
                     </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="item-body">
+                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
+                        <div class="item-body" onclick="lightbox_open(10);">
                             <div class="item-img-mask">
-                                <img src="img/img_10.jpeg" class="item-img">
+                                <img src="video/10/10.png" class="item-img">
                             </div>
                             <div class="item-text">
                                 <div>
-                                    <div class="author">1頭更換券</div>
-                                    <div class="name">アグー豚</div>
+                                    <div class="author">2㎏交換券</div>
+                                    <div class="name">海ぶどう</div>
                                 </div>
                                 <div class="price"><img id="icon-10" src="img/coin.svg"><span class="" id="price-10">1.15</span></div>
                             </div>

@@ -210,7 +210,7 @@ main .NFT-title {
 }
 
 .item-body .item-img-mask img {
-    width: 150%;
+    width: 110%;
     height: auto;
     position: absolute;
     left: 50%;
