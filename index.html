@@ -687,6 +687,39 @@ window.document.onkeydown = function(e) {
 }
 
 function lightbox_open(video_id) {
+    var text = "";
+    switch (video_id) {
+      case 1:
+        text = "金城農園の無農薬もやしの引換券となります。";
+        break;
+      case 2:
+        text = "沖縄県の大宜味村の開拓権利となります。";
+        break;
+      case 3:
+        text = "田中農場のアグー豚１頭の交換券となります。";
+        break;
+      case 4:
+        text = "サイトウ農場の石垣牛の牛タン引換券No.3495となります。";
+        break;
+      case 5:
+        text = "佐藤農園の有機栽培ゴーヤ2kg交換券となります。";
+        break;
+      case 6:
+        text = "数量限定の紅イモタルト10箱交換券となります。";
+        break;
+      case 7:
+        text = "山本工芸の琉球グラスの交換券となります。";
+        break;
+      case 8:
+        text = "宮代水産の天然もずく1kgの交換券となります。";
+        break;
+      case 9:
+        text = "ヤンバル製菓の限定ちんすこう交換券となります。";
+        break;
+      case 10:
+        text = "ちばりよ水産の天然海ぶどう交換券となります。";
+        break;
+    }
         if ($("#item-"+video_id).attr('name')==="OWNER"){
             var parent = document.getElementById("VisaChipCardVideo");
             if (parent !== null){
@@ -706,42 +739,15 @@ function lightbox_open(video_id) {
             lightBoxVideo.load();
             lightBoxVideo.play();
             var lightBoxDescription = document.getElementById("VisaChipCardDescription");
-            var text = "";
-            switch (video_id) {
-              case 1:
-                text = "金城農園の無農薬もやしの引換券となります。";
-                break;
-              case 2:
-                text = "沖縄県の大宜味村の開拓権利となります。";
-                break;
-              case 3:
-                text = "田中農場のアグー豚１頭の交換券となります。";
-                break;
-              case 4:
-                text = "サイトウ農場の石垣牛の牛タン引換券No.3495となります。";
-                break;
-              case 5:
-                text = "佐藤農園の有機栽培ゴーヤ2kg交換券となります。";
-                break;
-              case 6:
-                text = "数量限定の紅イモタルト10箱交換券となります。";
-                break;
-              case 7:
-                text = "山本工芸の琉球グラスの交換券となります。";
-                break;
-              case 8:
-                text = "宮代水産の天然もずく1kgの交換券となります。";
-                break;
-              case 9:
-                text = "ヤンバル製菓の限定ちんすこう交換券となります。";
-                break;
-              case 10:
-                text = "ちばりよ水産の天然海ぶどう交換券となります。";
-                break;
-            }
+
             lightBoxDescription.innerHTML = text;
         }else{
             console.log("user is not owner of NFT ID:"+video_id);
+            Swal.fire({
+              icon: 'info',
+              title: text,
+              showCancelButton: false, // There won't be any cancel button
+            })
         }
 
 }
