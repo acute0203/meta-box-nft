@@ -4,20 +4,13 @@ for (a = 0; a < itemBtn.length; a++) {
     itemBtn[a].value = "SOLD";
     itemBtn[a].style.background = "#ba4369";
     itemBtn[a].disabled = true;
-    //itemBtn[a].style.display = "none";
-    /*
-    if (itemBtn[a].name == "Buy") {
-        itemBtn[a].style.background =
-            "linear-gradient(to right, "
-            + "#3b73a1"
-            + ", "
-            + "#5e8fb4"
-            + ")";
-    } else if (itemBtn[a].name == "Sell") {
-        itemBtn[a].style.background = "#ba4369";
-    } else {
-        itemBtn[a].style.background = "#999999";
-        itemBtn[a].disabled = true;
-    }
-    */
+}
+
+let itemTransferBtn = document.querySelectorAll(".item-transfer-btn");
+for (a = 0; a < itemTransferBtn.length; a++) {
+    itemTransferBtn[a].name = "Transfer";
+    itemTransferBtn[a].value = "Transfer";
+    itemTransferBtn[a].style.background = "#ba4369";
+    itemTransferBtn[a].disabled = true;
+    itemTransferBtn[a].style.display = "none";
 }

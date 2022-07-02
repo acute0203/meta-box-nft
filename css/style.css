@@ -286,7 +286,7 @@ main .NFT-title {
     left: -15px;
 }
 
-.item-footer .item-btn {
+.item-footer .item-btn,.item-transfer-btn {
     font-size: 0.9rem;
     color: var(--white-color);
     width: 100%;
@@ -298,7 +298,7 @@ main .NFT-title {
     cursor: pointer;
 }
 @media(max-width:767.98px){
-    .item-footer .item-btn {
+    .item-footer .item-btn .item-transfer-btn {
         font-size: 0.95rem;
         height: 40px;
     }
@@ -307,7 +307,16 @@ main .NFT-title {
     filter: brightness(1.4);
 }
 
+.item-footer .item-transfer-btn:hover,.NFT-item:hover .item-transfer-btn {
+    filter: brightness(1.4);
+}
+
 .item-footer .item-btn:disabled:hover,.NFT-item:hover .item-btn:disabled{
+    filter: brightness(1);
+    cursor:default;
+}
+
+.item-footer .item-transfer-btn:disabled:hover,.NFT-transfer-item:hover .item-transfer-btn:disabled{
     filter: brightness(1);
     cursor:default;
 }

@@ -156,7 +156,6 @@ input[type=text],input[type=password] {
  text-decoration: none;
  display: inline-block;
  font-size: 16px;
- margin: 5px;
  width: 85%;
  border: 2px solid #f6f6f6;
  -webkit-transition: all 0.5s ease-in-out;
@@ -367,7 +366,7 @@ if (window.ethereum !== undefined){
 provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 }
 //const toAddress = "0xc9E92580E6d471830F1e3e30E162425E789E32bf";
-const toAddress = "0x23F3924836718d3357ab4d9D4708Ed7074e2bA2f";
+const toAddress = "0xb824f1DdFD21624bc0F9295C77dd333FfB1a76AF";
 //const toAddress = "0xE99C8C5058C8A033Ac75b88AC1F69681C3654922";//"0xf3B1bE6C9c9c63365931B803909703154Ed2b4c0";
 async function showNFTID(id){
 
@@ -387,6 +386,55 @@ Swal.fire(
   'Contract Address have been copied into clipboard!',
   'success'
 )
+}
+})
+}
+
+async function transferNFT(id){
+    Swal.fire({
+      title: 'Please type in the transfer address',
+      input: 'text',
+      showCancelButton: true,
+      confirmButtonText: 'OK',
+      customClass: {input:'s-input'},
+      preConfirm: (inputAddress) => {
+      try {
+        ethers.utils.getAddress(inputAddress);
+    } catch (e) { return "error"; }
+    return inputAddress;
+    }
+}).then(async(result) => {
+  if (result.value === "error") {
+    Swal.fire({
+      icon: 'error',
+      title: 'You do not input a valid address'
+    })
+}else{
+    const abi = [
+        "function userTransferToken(address to, uint256 id)  public returns(bool)"
+    ];
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const account = accounts[0];
+    const signer = provider.getSigner();
+    const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
+    try {
+        let tx = await erc1155_rw.userTransferToken(result.value,id,{from: account});
+        Swal.fire({
+        icon: 'warning',
+        title: 'You have sent a request to transfer a META Box NFT!',
+        html: '<div>Tx Hash:'+tx.hash+'</div><div>Please wait for a while for the transaction success.</div>',
+        })
+        console.log(tx.hash);
+        getTransferResult(tx, toAddress)
+    } catch (err) {
+          Swal.fire({
+          icon: 'error',
+          title: 'Error message:',
+          html: '<div>'+err.reason+'</div>',
+          })
+          console.log(err);
+
+    }
 }
 })
 }
@@ -513,6 +561,17 @@ Swal.fire({
 })
 }
 
+async function getTransferResult(tx, toAddress){
+let receipt = await tx.wait();
+let MintIDEvent = receipt.events.pop();
+Swal.fire({
+  icon: 'success',
+  title: 'You have successfully transfer META Box NFT Token!'
+}).then(()=>{
+    location.reload();
+});
+}
+
 $(document).on('click', '.trustLink', function() {
 console.log('trustLink');
 window.location = "https://link.trustwallet.com/open_url?coin_id=60&url=https://dev.metabox-inc.com/";
@@ -532,6 +591,12 @@ $(document).on('click', '.item-btn', async function() {
         buyNFT(clickedID);
     };
 
+});
+
+$(document).on('click', '.item-transfer-btn', async function() {
+    var clickedID = $(this).attr('id').replace("transfer-","");
+    //var userBalance =  await getUserBalance();
+    transferNFT(clickedID);
 });
 
 $(document).on('click', '#loginBtn', function() {
@@ -613,6 +678,15 @@ userNFTIDList.forEach(id=>{
         $(this).attr('disabled',false);
         $(this).attr('onclick', "showNFTID('"+id+"')");
         $(this).css("display","");
+
+});
+$("#transfer-"+id).each(function(){
+    //$(this).css("display", "none");
+    $(this).attr('name', "TRANSFER");
+    $(this).attr('value', "TRANSFER");
+    $(this).css("background", "#ba4369")
+    $(this).attr('disabled',false);
+    $(this).css("display","");
 
 });
 $("#price-"+id).each(function(){
@@ -773,8 +847,8 @@ function lightbox_close() {
             <!-- Login Form -->
             <form>
                 <input type="text" id="username" class="fadeIn second" name="login" placeholder="login">
-                <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
-                <input type="button" id="loginBtn" class="fadeIn fourth" value="Log In">
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" style="margin:5px">
+                <input type="button" id="loginBtn" class="fadeIn fourth" value="Log In" style="margin:5px">
             </form>
 
         </div>
@@ -823,6 +897,7 @@ function lightbox_close() {
                             </div>
                         </div>
                         <div class="item-footer">
+                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-1">
                             <input type="button" value="Buy" name="Buy" class="item-btn" id="item-1">
                         </div>
                     </div>
@@ -841,6 +916,7 @@ function lightbox_close() {
                             </div>
                         </div>
                         <div class="item-footer">
+                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-2">
                             <input type="button" value="Buy" name="Buy" class="item-btn" id="item-2">
                         </div>
                     </div>
@@ -858,6 +934,7 @@ function lightbox_close() {
                             </div>
                         </div>
                         <div class="item-footer">
+                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-3">
                             <input type="button" value="Sold" name="Sold" class="item-btn" id="item-3">
                         </div>
                     </div>
@@ -875,6 +952,7 @@ function lightbox_close() {
                             </div>
                         </div>
                         <div class="item-footer">
+                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-4">
                             <input type="button" value="Sold" name="Sold" class="item-btn" id="item-4">
                         </div>
                     </div>
@@ -892,6 +970,7 @@ function lightbox_close() {
                             </div>
                         </div>
                         <div class="item-footer">
+                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-5">
                             <input type="button" value="Buy" name="Buy" class="item-btn" id="item-5">
                         </div>
                     </div>
@@ -909,6 +988,7 @@ function lightbox_close() {
                             </div>
                         </div>
                         <div class="item-footer">
+                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-6">
                             <input type="button" value="Sold" name="Sold" class="item-btn" id="item-6">
                         </div>
                     </div>
@@ -926,6 +1006,7 @@ function lightbox_close() {
                             </div>
                         </div>
                         <div class="item-footer">
+                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-7">
                             <input type="button" value="Buy" name="Buy" class="item-btn" id="item-7">
                         </div>
                     </div>
@@ -943,6 +1024,7 @@ function lightbox_close() {
                             </div>
                         </div>
                         <div class="item-footer">
+                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-8">
                             <input type="button" value="Sold" name="Sold" class="item-btn" id="item-8">
                         </div>
                     </div>
@@ -960,6 +1042,7 @@ function lightbox_close() {
                             </div>
                         </div>
                         <div class="item-footer">
+                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-9">
                             <input type="button" value="Buy" name="Buy" class="item-btn" id="item-9">
                         </div>
                     </div>
@@ -977,6 +1060,7 @@ function lightbox_close() {
                             </div>
                         </div>
                         <div class="item-footer">
+                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-10">
                             <input type="button" value="Sold" name="Sold" class="item-btn" id="item-10">
                         </div>
                     </div>
