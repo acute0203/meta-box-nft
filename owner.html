@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="canonical" href="">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+  <!-- jQuery Modal -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.6.umd.min.js" type="text/javascript">
+    </script>
+
+  <script src="js/owner.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+  <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/top.css" type="text/css">
+  <link rel="stylesheet" href="css/master.css" type="text/css">
+  <script>
+  let provider = null;
+if (window.ethereum !== undefined){
+provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+}
+//const toAddress = "0xc9E92580E6d471830F1e3e30E162425E789E32bf";
+const toAddress = "0x8dC72A329afB0561fcb6d3C15B40A32B00D571bF";
+$( document ).ready(function() {
+const showToAddress = toAddress.slice(0, 6)+"..."+toAddress.slice(-4);
+$("#contractAddress").html(showToAddress);
+})
+async function getTXResult(tx, toAddress, operation){
+let receipt = await tx.wait();
+let MintIDEvent = receipt.events.pop();
+Swal.fire({
+  icon: 'success',
+  title: 'You have successfully '+operation+' in META Box NFT Token!'
+}).then(()=>{
+    location.reload();
+});
+}
+  async function transferNFT(id){
+      Swal.fire({
+        title: 'Please type in the transfer address',
+        input: 'text',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        preConfirm: (inputAddress) => {
+        try {
+          ethers.utils.getAddress(inputAddress);
+      } catch (e) { return "error"; }
+      return inputAddress;
+      }
+  }).then(async(result) => {
+    if (result.value === "error") {
+      Swal.fire({
+        icon: 'error',
+        title: 'You do not input a valid address'
+      })
+  }else{
+      const abi = [
+          "function userTransferToken(address to, uint256 id)  public returns(bool)"
+      ];
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const account = accounts[0];
+      const signer = provider.getSigner();
+      const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
+      try {
+          let tx = await erc1155_rw.userTransferToken(result.value,id,{from: account});
+          Swal.fire({
+          icon: 'warning',
+          title: 'You have sent a request to transfer a META Box NFT!',
+          html: '<div>Tx Hash:'+tx.hash+'</div><div>Please wait for a while for the transaction success.</div>',
+          })
+          console.log(tx.hash);
+          getTXResult(tx, toAddress,"transfer NFT")
+      } catch (err) {
+            Swal.fire({
+            icon: 'error',
+            title: 'Error message:',
+            html: '<div>'+err.reason+'</div>',
+            })
+            console.log(err);
+
+      }
+  }
+  })
+  }
+
+  async function setSellPrice(id){
+      Swal.fire({
+        title: 'Please type in the sell price',
+        input: 'text',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Stop Selling',
+        preConfirm: (inputPrice) => {
+        try {
+          var inputPriceWei = ethers.utils.parseEther(inputPrice);
+      } catch (e) { return "error"; }
+      return inputPriceWei;
+      }
+  }).then(async(result) => {
+    console.log(result);
+    if (result.value === "error") {
+      Swal.fire({
+        icon: 'error',
+        title: 'You do not input a valid price'
+      })
+  }else if(result.dismiss ==="cancel"){
+      setSalesPrice(id,"115792089237316195423570985008687907853269984665640564039457584007913129639935");
+  }else if(result.isConfirmed){
+      setSalesPrice(id,result.value);
+  }
+  })
+  }
+
+  async function setSalesPrice(id,price){
+      const abi = [
+          "function setSalesPrice(uint256 tokenID, uint256 salesPrice)  public returns(bool)"
+      ];
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const account = accounts[0];
+      const signer = provider.getSigner();
+      const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
+      try {
+          let tx = await erc1155_rw.setSalesPrice(id,price,{from: account});
+          Swal.fire({
+          icon: 'warning',
+          title: 'You have sent a request to set sell price a META Box NFT!',
+          html: '<div>Tx Hash:'+tx.hash+'</div><div>Please wait for a while for the transaction success.</div>',
+          })
+          console.log(tx.hash);
+          getTXResult(tx, toAddress,"set sell price")
+      } catch (err) {
+            Swal.fire({
+            icon: 'error',
+            title: 'Error message:',
+            html: '<div>'+err.reason+'</div>',
+            })
+            console.log(err);
+      }
+  }
+  async function getNFTPrice(id){
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  const account = accounts[0];
+  const abi = [
+      "function getNFTPrice(uint256 tokenID) public view returns (uint256)"
+  ];
+  const signer = provider.getSigner();
+  const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
+  let tx = await erc1155_rw.getNFTPrice(id,{from: account});
+  const nftListString = tx.toString();
+  //console.log(i,ethers.utils.formatEther(nftListString));
+  if (!nftListString.endsWith("39935")){
+      $("#price").html('<img src="./images/icon-price.png" alt="">'+ethers.utils.formatEther(nftListString).toString()+'<span class="u-unit">ETH</span>');
+      $('#op-sell-btn').html("Is Selling");
+      $('#op-sell-btn').attr('href',"javascript:setSellPrice(\""+id+"\")");
+  }else{
+      $("#price").each(function(){
+          $(this).css("visibility", "hidden");
+      });
+      $("#icon").each(function(){
+          $(this).css("visibility", "hidden");
+      });
+      $('#op-sell-btn').html("Sell");
+      $('#op-sell-btn').attr('href',"javascript:setSellPrice(\""+id+"\")");
+  }
+  }
+  async function getNFTOwnerAddress(id){
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  const account = accounts[0];
+  const abi = [
+      "function getNFTOwner(uint256 tokenID) public view returns(address)"
+  ];
+  const signer = provider.getSigner();
+  const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
+  let tx = await erc1155_rw.getNFTOwner(id,{from: account});
+  const nftListString = tx.toString();
+  const showToAddress = nftListString.slice(0, 6)+"..."+nftListString.slice(-4);
+  console.log(showToAddress);
+  $(".NFTShortOwnerAddress").html(showToAddress);
+  $(".NFTFullOwnerAddress").html(nftListString);
+  }
+  </script>
+<style>
+#fade {
+  display: none;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: .80;
+  filter: alpha(opacity=80);
+}
+
+#light {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-height: 450px;
+  margin-left: -300px;
+  margin-top: -180px;
+  border: 2px solid #FFF;
+  background: #FFF;
+  z-index: 1002;
+  overflow: visible;
+  padding: 15px;
+  border-radius:12px;
+}
+
+#boxclose {
+  float: right;
+  cursor: pointer;
+  color: #fff;
+  border: 1px solid #AEAEAE;
+  border-radius: 3px;
+  background: #222222;
+  font-size: 31px;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 0px;
+  padding: 11px 3px;
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  z-index: 1002;
+  opacity: 0.9;
+}
+
+.boxclose:before {
+  content: "×";
+}
+
+#fade:hover ~ #boxclose {
+  display:none;
+}
+
+.test:hover ~ .test2 {
+  display: none;
+}
+</style>
+
+</head>
+
+<body>
+
+<header id="header">
+    <div class="c-header">
+        <div class="c-header__wrap">
+        <div class="c-header__info">
+            <a href="index.html" class="c-header__logo">
+            <img src="./images/logo.png" alt="META BOX">
+            </a>
+            <p class="c-header__text">NFT Marketplace</p>
+        </div>
+        <div class="c-toggle">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+        </div>
+        <div class="c-header__menu">
+            <ul>
+            <li>
+                <a href="#">食べる</a>
+            </li>
+            <li>
+                <a href="#">体験する</a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+    </header>
+
+<main>
+    <div id="light" >
+
+                <a class="boxclose" id="boxclose" onclick="lightbox_close();"></a>
+                  <video id="VisaChipCardVideo" width="600" controls>
+                      <!--<source id="video_url" src="" type="video/mp4">-->
+                      <!--Browser does not support <video> tag -->
+                    </video>
+                    <div id="VisaChipCardDescription" style="text-align: center"></div>
+                  </div>
+
+                <div id="fade" onClick="lightbox_close();"></div>
+    <div class="c-page">
+        <div class="c-container">
+            <div class="c-owner">
+                <div class="c-owner__image c-owner__left c-owner__article">
+                    <img class="c-owner__img" src="./images/1_golf/1.jpeg" alt="">
+                </div>
+                <div class="c-owner__main c-owner__right c-owner__article">
+                    <p class="c-owner__name NFTFullOwnerAddress">Seller name</p>
+                    <div class="c-owner__top">
+                        <p class="c-owner__title">ゴルフコース会員権</p>
+                        <!--<a href="" class=""><img src="./images/icon-share.png" alt=""></a>-->
+                    </div>
+                    <div class="c-owner__flex">
+                        <div class="c-owner__col">
+                            <p id="icon" class="c-owner__text">価格</p>
+                            <div id="price" class="c-owner__price">
+                                <img src="./images/icon-price2.png" alt="">
+                                0.34<span class="unit">ETH</span><!--<span class="convert">（$410.64）</span>-->
+                            </div>
+                        </div>
+                        <!--
+                        <div class="c-owner__col">
+                            <p class="c-owner__text">終了日時</p>
+                            <div class="c-owner__date">
+                                2022/07/03  23:59
+                            </div>
+                        </div>
+                    -->
+                    </div>
+                    <div class="c-owner__btn">
+                        <a href="" id="op-sell-btn" class="is-sell">Sell</a>
+                        <a href="" class="is-transfer">Transfer</a>
+                    </div>
+                    <div class="c-owner__explanation">
+                        <!--<p class="c-owner__text">終了日時</p>-->
+                        <div class="c-owner__explanation--text">
+                            ゴルフ好きも憧れるダイナミックコースの会員券。<br>
+                            80万坪という国内トップクラスのスケールと、リゾートならではの眺望。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="c-owner is-start">
+                <div class="c-owner__detail c-owner__left c-owner__article">
+                    <div class="c-owner__head">
+                        <p class="c-owner__head--text"><img src="./images/icon-note.png" alt="">詳細</p>
+                        <img src="./images/arrow.png" alt="">
+                    </div>
+                    <div class="c-owner__grid">
+                        <div>
+                            <p>製作者</p>
+                            <p>栗 瑛太</p>
+                        </div>
+                        <div>
+                            <p>所有者</p>
+                            <p class="NFTShortOwnerAddress">栗 瑛太</p>
+                        </div>
+                        <div>
+                            <p>ネットワーク</p>
+                            <p>ERC1155 / Ethereum</p>
+                        </div>
+                        <div>
+                            <p>コントラクトアドレス</p>
+                            <p id="contractAddress"></p>
+                        </div>
+                        <div>
+                            <p>トークンID</p>
+                            <p class="item-ID"></p>
+                        </div>
+                        <div>
+                            <p>プラットフォーム手数料</p>
+                            <p>2.5%</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="c-owner__detail c-owner__right c-owner__article">
+                    <div class="c-owner__head">
+                        <p class="c-owner__head--text"><img src="./images/icon-note.png" alt="">リンク</p>
+                        <img src="./images/arrow.png" alt="">
+                    </div>
+                    <div class="c-owner__grid">
+                        <div>
+                            <p>Link</p>
+                            <p><a class="link-href" href="javascript:lightbox_open(1);">Link</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!--Footer-->
+<footer id="footer">
+  <div class="c-footer">
+    <p class="c-footer__text">
+      © 2022 Metabox.
+    </p>
+  </div>
+</footer>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="js/script.js"></script>
+<!-- Initialize Swiper -->
+<script>
+  const buildSwiperSlider = sliderElm => {
+      const sliderIdentifier = sliderElm.dataset.id;
+      console.log(sliderElm.id)
+      var swiper = new Swiper(`#${sliderElm.id}-nav`, {
+        loop: true,
+        spaceBetween: 10,
+        slidesPerView: 5,
+        freeMode: true,
+        watchSlidesProgress: true,
+      });
+      var swiper2 = new Swiper(`#${sliderElm.id}`, {
+        loop: true,
+        spaceBetween: 10,
+        navigation: {
+          nextEl: `#${sliderElm.id} .swiper-button-next`,
+          prevEl: `#${sliderElm.id} .swiper-button-prev`
+        },
+        thumbs: {
+          swiper: swiper,
+        },
+      });
+  }
+
+  const allSliders = document.querySelectorAll('.swiper');
+  allSliders.forEach(slider => buildSwiperSlider(slider));
+
+</script>
+</html>

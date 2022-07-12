@@ -1,372 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="robots" content="all">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-    <meta name="copyright" content="META BOX">
-    <meta name="description" content="網頁敘述,會出現在google搜尋">
-    <meta name="distribution" content="Taiwan">
-    <meta name="geo.region" content="tw">
-
-    <!--FACEBOOK Share-->
-    <meta property="og:url" content="該網頁網址">
-    <meta property="og:title" content="META BOX">
-    <meta property="og:site_name" content="META BOX">
-    <meta property="og:image" content="img/META-BOX.png">
-    <meta property="og:description" content="網頁敘述">
-    <meta property="og:type" content="website">
-    <!--FACEBOOK Share-->
-
-    <link rel="icon" href="img/favicon.ico">
-
-    <!--主要CSS-->
-    <link href="css/reset.css" rel="stylesheet">
-    <link href="css/style.css?version=1.1" rel="stylesheet">
-    <link href="css/aos.css" rel="stylesheet">
-    <style>
-
-        /* BASIC */
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="canonical" href="">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
 
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 
-body {
- font-family: "Poppins", sans-serif;
- height: 100vh;
-}
-
-a {
- color: #92badd;
- display:inline-block;
- text-decoration: none;
- font-weight: 400;
-}
-
-h2 {
- text-align: center;
- font-size: 16px;
- font-weight: 600;
- text-transform: uppercase;
- display:inline-block;
- margin: 40px 8px 10px 8px;
- color: #cccccc;
-}
-
-
-
-/* STRUCTURE */
-
-.wrapper {
- display: flex;
- align-items: center;
- flex-direction: column;
- justify-content: center;
- width: 100%;
- min-height: 100%;
- padding: 20px;
-}
-
-#formContent {
- -webkit-border-radius: 10px 10px 10px 10px;
- border-radius: 10px 10px 10px 10px;
- background: #fff;
- padding: 30px;
- width: 90%;
- max-width: 450px;
- position: relative;
- padding: 0px;
- -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
- box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
- text-align: center;
-}
-
-#formFooter {
- background-color: #f6f6f6;
- border-top: 1px solid #dce8f1;
- padding: 25px;
- text-align: center;
- -webkit-border-radius: 0 0 10px 10px;
- border-radius: 0 0 10px 10px;
-}
-
-
-
-/* TABS */
-
-h2.inactive {
- color: #cccccc;
-}
-
-h2.active {
- color: #0d0d0d;
- border-bottom: 2px solid #5fbae9;
-}
-
-
-
-/* FORM TYPOGRAPHY*/
-
-input[type=button][class="fadeIn fourth"], input[type=reset]  {
-  background-color: #3b73a1;
-  border: none;
-  color: white;
-  padding: 15px 80px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  text-transform: uppercase;
-  font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-  box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 40px 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
-
-input[type=button][class="fadeIn fourth"]:hover, input[type=reset]:hover  {
-  background-color: #3b73a1;
-}
-
-input[type=button][class="fadeIn fourth"]:active, input[type=reset]:active  {
-  -moz-transform: scale(0.95);
-  -webkit-transform: scale(0.95);
-  -o-transform: scale(0.95);
-  -ms-transform: scale(0.95);
-  transform: scale(0.95);
-}
-
-
-
-
-
-
-input[type=text],input[type=password] {
- background-color: #f6f6f6;
- border: none;
- color: #0d0d0d;
- padding: 15px 32px;
- text-align: center;
- text-decoration: none;
- display: inline-block;
- font-size: 16px;
- width: 85%;
- border: 2px solid #f6f6f6;
- -webkit-transition: all 0.5s ease-in-out;
- -moz-transition: all 0.5s ease-in-out;
- -ms-transition: all 0.5s ease-in-out;
- -o-transition: all 0.5s ease-in-out;
- transition: all 0.5s ease-in-out;
- -webkit-border-radius: 5px 5px 5px 5px;
- border-radius: 5px 5px 5px 5px;
-}
-
-input[type=text]:focus,input[type=password]:focus {
- background-color: #fff;
- border-bottom: 2px solid #3b73a1;
-}
-
-input[type=text]:placeholder,input[type=password]:placeholder {
- color: #cccccc;
-}
-
-
-
-/* ANIMATIONS */
-
-/* Simple CSS3 Fade-in-down Animation */
-.fadeInDown {
- -webkit-animation-name: fadeInDown;
- animation-name: fadeInDown;
- -webkit-animation-duration: 1s;
- animation-duration: 1s;
- -webkit-animation-fill-mode: both;
- animation-fill-mode: both;
-}
-
-@-webkit-keyframes fadeInDown {
- 0% {
-   opacity: 0;
-   -webkit-transform: translate3d(0, -100%, 0);
-   transform: translate3d(0, -100%, 0);
- }
- 100% {
-   opacity: 1;
-   -webkit-transform: none;
-   transform: none;
- }
-}
-
-@keyframes fadeInDown {
- 0% {
-   opacity: 0;
-   -webkit-transform: translate3d(0, -100%, 0);
-   transform: translate3d(0, -100%, 0);
- }
- 100% {
-   opacity: 1;
-   -webkit-transform: none;
-   transform: none;
- }
-}
-
-/* Simple CSS3 Fade-in Animation */
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-
-.fadeIn {
- opacity:0;
- -webkit-animation:fadeIn ease-in 1;
- -moz-animation:fadeIn ease-in 1;
- animation:fadeIn ease-in 1;
-
- -webkit-animation-fill-mode:forwards;
- -moz-animation-fill-mode:forwards;
- animation-fill-mode:forwards;
-
- -webkit-animation-duration:1s;
- -moz-animation-duration:1s;
- animation-duration:1s;
-}
-
-.fadeIn.first {
- -webkit-animation-delay: 0.4s;
- -moz-animation-delay: 0.4s;
- animation-delay: 0.4s;
-}
-
-.fadeIn.second {
- -webkit-animation-delay: 0.6s;
- -moz-animation-delay: 0.6s;
- animation-delay: 0.6s;
-}
-
-.fadeIn.third {
- -webkit-animation-delay: 0.8s;
- -moz-animation-delay: 0.8s;
- animation-delay: 0.8s;
-}
-
-.fadeIn.fourth {
- -webkit-animation-delay: 1s;
- -moz-animation-delay: 1s;
- animation-delay: 1s;
-}
-
-/* Simple CSS3 Fade-in Animation */
-.underlineHover:after {
- display: block;
- left: 0;
- bottom: -10px;
- width: 0;
- height: 2px;
- background-color: #56baed;
- content: "";
- transition: width 0.2s;
-}
-
-.underlineHover:hover {
- color: #0d0d0d;
-}
-
-.underlineHover:hover:after{
- width: 100%;
-}
-
-
-
-/* OTHERS */
-
-*:focus {
-   outline: none;
-}
-
-/*Light box*/
-
-#fade {
-  display: none;
-  position: fixed;
-  top: 0%;
-  left: 0%;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  z-index: 1001;
-  -moz-opacity: 0.8;
-  opacity: .80;
-  filter: alpha(opacity=80);
-}
-
-#light {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  max-height: 450px;
-  margin-left: -300px;
-  margin-top: -180px;
-  border: 2px solid #FFF;
-  background: #FFF;
-  z-index: 1002;
-  overflow: visible;
-  padding: 15px;
-  border-radius:12px;
-}
-
-#boxclose {
-  float: right;
-  cursor: pointer;
-  color: #fff;
-  border: 1px solid #AEAEAE;
-  border-radius: 3px;
-  background: #222222;
-  font-size: 31px;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 0px;
-  padding: 11px 3px;
-  position: absolute;
-  right: 2px;
-  top: 2px;
-  z-index: 1002;
-  opacity: 0.9;
-}
-
-.boxclose:before {
-  content: "×";
-}
-
-#fade:hover ~ #boxclose {
-  display:none;
-}
-
-.test:hover ~ .test2 {
-  display: none;
-}
-
-    </style>
-    <title>META BOX</title>
+  <!-- jQuery Modal -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+  <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.ethers.io/lib/ethers-5.6.umd.min.js" type="text/javascript">
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery.session@1.0.0/jquery.session.min.js"></script>
-    <script>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/top.css" type="text/css">
+  <link rel="stylesheet" href="css/master.css" type="text/css">
+
+  <script>
         let provider = null;
 if (window.ethereum !== undefined){
 provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 }
 //const toAddress = "0xc9E92580E6d471830F1e3e30E162425E789E32bf";
-const toAddress = "0xb824f1DdFD21624bc0F9295C77dd333FfB1a76AF";
+const toAddress = "0x8dC72A329afB0561fcb6d3C15B40A32B00D571bF";
 //const toAddress = "0xE99C8C5058C8A033Ac75b88AC1F69681C3654922";//"0xf3B1bE6C9c9c63365931B803909703154Ed2b4c0";
 async function showNFTID(id){
 
@@ -524,20 +191,36 @@ const abi = [
 "event MintID(uint256)",
 "function buyNFTWithEther(uint256 buyID) external payable returns (uint256)",
 "function getUserNFTIDList() public view returns(uint256[] memory)",
-"function getNFTPrice(uint256 tokenID) public view returns (uint256)"
+"function getNFTPrice(uint256 tokenID) public view returns (uint256)",
+"function buyToken(uint256 tokenID) public payable returns(bool)"
 ];
 
 const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
 const amount = await erc1155_rw.getNFTPrice(id,{from: account});
 try {
-    let tx = await erc1155_rw.buyNFTWithEther(id,{from: account,value: amount});
-    Swal.fire({
-    icon: 'warning',
-    title: 'You have sent a request to mint a META Box NFT!',
-    html: '<div>Tx Hash:'+tx.hash+'</div><div>Please wait for a while for the transaction success.</div>',
-    })
-    console.log(tx.hash);
-    getMintResult(tx, toAddress);
+    const ownerNFTIDStr = await getOwnerNFTIDList();
+    const ownerNFTIDList = ownerNFTIDStr.split(",");
+    if (jQuery.inArray(id.toString(), ownerNFTIDList) > -1){
+        console.log("1st market");
+        let tx = await erc1155_rw.buyNFTWithEther(id,{from: account,value: amount});
+        Swal.fire({
+        icon: 'warning',
+        title: 'You have sent a request to buy a META Box NFT!',
+        html: '<div>Tx Hash:'+tx.hash+'</div><div>Please wait for a while for the transaction success.</div>',
+        })
+        getTXResult(tx, toAddress);
+    } else {
+        console.log("2nd market");
+        let tx = await erc1155_rw.buyToken(id,{from: account,value: amount});
+        Swal.fire({
+        icon: 'warning',
+        title: 'You have sent a request to buy a META Box NFT!',
+        html: '<div>Tx Hash:'+tx.hash+'</div><div>Please wait for a while for the transaction success.</div>',
+        })
+        getTXResult(tx, toAddress);
+    }
+
+
 } catch (err) {
       Swal.fire({
       icon: 'error',
@@ -552,7 +235,7 @@ try {
 
 }
 
-async function getMintResult(tx, toAddress){
+async function getTXResult(tx, toAddress){
 let receipt = await tx.wait();
 let MintIDEvent = receipt.events.pop();
 Swal.fire({
@@ -649,55 +332,53 @@ const nftListString = await getUserNFTIDList();
 const ownerNFTIDStr = await getOwnerNFTIDList();
 const ownerNFTIDList = ownerNFTIDStr.split(",");
 const userNFTIDList = nftListString.split(",");
-await getNFTPrice();
-
+getNFTPrice();
+getNFTOwnerAddress();
 ownerNFTIDList.forEach(id=>{
     $("#item-"+id).each(function(){
-        //$(this).css("display", "none");
-        $(this).attr('name', "BUY");
-        $(this).attr('value', "BUY");
-        $(this).css("background", "linear-gradient(to right, "
-        + "#3b73a1"
-        + ", "
-        + "#5e8fb4"
-        + ")")
+        $(this).removeClass( "is-sold" ).removeClass( "is-own" ).addClass( "is-buy" );
+        $(this).html("BUY");
         $(this).attr('disabled',false);
-        $(this).css("display","");
+        $(this).attr('href','javascript:buyNFT('+id+')');
 
 });
-$("#price-"+id).each(function(){
-    $(this).attr('class',"ETH");
+$("#item-in-"+id).each(function(){
+    $(this).removeClass( "is-sold" ).removeClass( "is-own" ).addClass( "is-buy" );
+    $(this).html("BUY");
+    $(this).attr('disabled',false);
+    $(this).attr('href','javascript:buyNFT('+id+')');
+
 });
 })
 userNFTIDList.forEach(id=>{
     $("#item-"+id).each(function(){
         //$(this).css("display", "none");
-        $(this).attr('name', "OWNER");
-        $(this).attr('value', "OWNER");
-        $(this).css("background", "#ba4369")
+        $(this).removeClass( "is-sold" ).removeClass( "is-buy" ).addClass( "is-own" );
+        $(this).html("OWN");
         $(this).attr('disabled',false);
-        $(this).attr('onclick', "showNFTID('"+id+"')");
-        $(this).css("display","");
+        $(this).attr('href','/owner.html?item='+id);
 
 });
-$("#transfer-"+id).each(function(){
+$("#item-in-"+id).each(function(){
     //$(this).css("display", "none");
-    $(this).attr('name', "TRANSFER");
-    $(this).attr('value', "TRANSFER");
-    $(this).css("background", "#ba4369")
+    $(this).removeClass( "is-sold" ).removeClass( "is-buy" ).addClass( "is-own" );
+    $(this).html("OWN");
     $(this).attr('disabled',false);
-    $(this).css("display","");
-
+    $(this).attr('href','/owner.html?item='+id);
 });
-$("#price-"+id).each(function(){
-    $(this).css("display", "none");
-    $(this).html("");
 
+$("#item-out-"+id).each(function(){
+    //$(this).css("display", "none");
+    $(this).removeAttr( "rel" )
+    $(this).attr('href','/owner.html?item='+id);
+});
+
+$("#price-"+id).each(function(){
+    $(this).css("visibility", "hidden");
 });
 
 $("#icon-"+id).each(function(){
-    $(this).css("display", "none");
-    $(this).html("");
+    $(this).css("visibility", "hidden");
 });
 
 })
@@ -716,7 +397,8 @@ async function getNFTPrice(){
 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
 const account = accounts[0];
 const abi = [
-    "function getNFTPrice(uint256 tokenID) public view returns (uint256)"
+    "function getNFTPrice(uint256 tokenID) public view returns (uint256)",
+    "function getNFTOwner(uint256 tokenID) public view returns(address)"
 ];
 const signer = provider.getSigner();
 const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
@@ -724,16 +406,39 @@ for (var i=1;i<11;i++){
 let tx = await erc1155_rw.getNFTPrice(i,{from: account});
 const nftListString = tx.toString();
 //console.log(i,ethers.utils.formatEther(nftListString));
-if (!nftListString.endsWith("39935"))
-$("#price-"+i).html(ethers.utils.formatEther(nftListString).toString()+" ");
-else{
-    $("#price-"+i).html("");
+let txNFTOwner = await erc1155_rw.getNFTOwner(i,{from: account});
+const nftOwnerAddress = txNFTOwner.toString();
+if (!nftListString.endsWith("39935") && nftOwnerAddress.toLowerCase()!==account.toLowerCase()){
+    $("#price-"+i).html('<img src="./images/icon-price.png" alt="">'+ethers.utils.formatEther(nftListString).toString()+'<span class="u-unit">ETH</span>');
+    $("#item-"+i).removeClass( "is-sold" ).removeClass( "is-own" ).addClass( "is-buy" );
+    $("#item-"+i).html("BUY");
+    $("#item-"+i).attr('disabled',false);
+    $("#item-"+i).attr('href','javascript:buyNFT('+i+')');
+}else{
+    $("#price-"+i).each(function(){
+        $(this).css("visibility", "hidden");
+    });
     $("#icon-"+i).each(function(){
-        $(this).css("display", "none");
-        $(this).html("");
+        $(this).css("visibility", "hidden");
     });
 }
 
+}
+}
+
+async function getNFTOwnerAddress(){
+const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+const account = accounts[0];
+const abi = [
+    "function getNFTOwner(uint256 tokenID) public view returns(address)"
+];
+const signer = provider.getSigner();
+const erc1155_rw = new ethers.Contract(toAddress, abi, signer);
+for (var i=1;i<11;i++){
+let tx = await erc1155_rw.getNFTOwner(i,{from: account});
+const nftListString = tx.toString();
+const showToAddress = nftListString.slice(0, 6)+"..."+nftListString.slice(-4);
+$("#NFTOwnerAddress-"+i).html(showToAddress);
 }
 }
 
@@ -748,332 +453,404 @@ $( document ).ready(function() {
     }
 });
 
-</script>
-
-<script>
-window.document.onkeydown = function(e) {
-  if (!e) {
-    e = event;
-  }
-  if (e.keyCode == 27) {
-    lightbox_close();
-  }
-}
-
-function lightbox_open(video_id) {
-    var text = "";
-    switch (video_id) {
-      case 1:
-        text = "金城農園の無農薬もやしの引換券となります。";
-        break;
-      case 2:
-        text = "沖縄県の大宜味村の開拓権利となります。";
-        break;
-      case 3:
-        text = "田中農場のアグー豚１頭の交換券となります。";
-        break;
-      case 4:
-        text = "サイトウ農場の石垣牛の牛タン引換券No.3495となります。";
-        break;
-      case 5:
-        text = "佐藤農園の有機栽培ゴーヤ2kg交換券となります。";
-        break;
-      case 6:
-        text = "数量限定の紅イモタルト10箱交換券となります。";
-        break;
-      case 7:
-        text = "山本工芸の琉球グラスの交換券となります。";
-        break;
-      case 8:
-        text = "宮代水産の天然もずく1kgの交換券となります。";
-        break;
-      case 9:
-        text = "ヤンバル製菓の限定ちんすこう交換券となります。";
-        break;
-      case 10:
-        text = "ちばりよ水産の天然海ぶどう交換券となります。";
-        break;
+function showItem(itemArticle){
+    if (itemArticle==="eat"){
+        $(".exp").css("display","none");
+        $(".eat").css("display","");
+    }else if(itemArticle==="exp"){
+        $(".exp").css("display","");
+        $(".eat").css("display","none");
     }
-        if ($("#item-"+video_id).attr('name')==="OWNER"){
-            var parent = document.getElementById("VisaChipCardVideo");
-            if (parent !== null){
-                while (parent.firstChild) {
-             			parent.firstChild.remove()
-            		}
-            }
-            var source = document.createElement('source');
-            source.setAttribute('src', "/video/"+video_id+"/"+video_id+".mp4");
-            source.setAttribute('type', 'video/mp4');
-            source.setAttribute('id', 'video_src');
-            var lightBoxVideo = document.getElementById("VisaChipCardVideo");
-            lightBoxVideo.appendChild(source);
-            window.scrollTo(0, 0);
-            document.getElementById('light').style.display = 'block';
-            document.getElementById('fade').style.display = 'block';
-            lightBoxVideo.load();
-            lightBoxVideo.play();
-            var lightBoxDescription = document.getElementById("VisaChipCardDescription");
-
-            lightBoxDescription.innerHTML = text;
-        }else{
-            console.log("user is not owner of NFT ID:"+video_id);
-            Swal.fire({
-              icon: 'info',
-              title: text,
-              showCancelButton: false, // There won't be any cancel button
-            })
-        }
 
 }
-function lightbox_close() {
-  var lightBoxVideo = document.getElementById("VisaChipCardVideo");
-  document.getElementById('light').style.display = 'none';
-  document.getElementById('fade').style.display = 'none';
-  lightBoxVideo.pause();
-}
+
 </script>
 </head>
 
 <body>
-    <div id="login" class="wrapper fadeInDown">
-        <div id="formContent">
-            <!-- Tabs Titles -->
 
-            <!-- Icon -->
-            <div class="fadeIn first">
-                <img src="img/icon-14.png" id="icon" alt="User Icon" />
+<header id="header">
+  <div class="c-header">
+    <div class="c-header__wrap">
+      <div class="c-header__info">
+        <a href="index.html" class="c-header__logo">
+          <img src="./images/logo.png" alt="META BOX">
+        </a>
+        <p class="c-header__text">NFT Marketplace</p>
+      </div>
+      <div class="c-toggle">
+        <span class="line line1"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </div>
+      <div class="c-header__menu">
+        <ul>
+          <li>
+            <a href="javascript:showItem('eat')">食べる</a>
+          </li>
+          <li>
+            <a href="javascript:showItem('exp')">体験する</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="c-home">
+    <div class="c-container">
+      <h3 class="c-title">NFT Collection</h3>
+      <div class="c-articles">
+        <div class="c-article exp">
+          <div class="c-article__wrap">
+            <a id="item-out-1" href="#ex1" class="c-article__inner"rel="modal:open">
+              <div class="c-article__thumb">
+                <img src="./images/1_golf/1.jpeg" alt="">
+              </div>
+              <div class="c-article__main">
+                <p class="c-article__name" id="NFTOwnerAddress-1">Seller name</p>
+                <p class="c-article__title">ゴルフコース会員権</p>
+                <p id="price-1" class="c-article__price"><img src="./images/icon-price.png" alt="">0.34<span class="u-unit">ETH</span></p>
+              </div>
+            </a>
+            <div class="c-article__button">
+              <a id="item-1" href="#" class="c-btn is-sold" disabled>Sold</a>
+              <!--<a href="#" class="c-btn is-buy">Buy</a>-->
             </div>
-
-            <!-- Login Form -->
-            <form>
-                <input type="text" id="username" class="fadeIn second" name="login" placeholder="login">
-                <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" style="margin:5px">
-                <input type="button" id="loginBtn" class="fadeIn fourth" value="Log In" style="margin:5px">
-            </form>
-
+          </div>
         </div>
-    </div>
-
-    <div id="shop" style="display:none">
-        <header>
-            <div class="container">
-                <article class="header">
-                    <div class="logo" data-aos="fade-down" data-aos-duration="600"><img src="img/METABOX.svg"><span>NFT
-                            Marketplace</span></div>
-                </article>
+        <div class="c-article exp">
+          <div class="c-article__wrap">
+            <a id="item-out-2" href="#ex2" class="c-article__inner" rel="modal:open">
+              <div class="c-article__thumb">
+                <img src="./images/2_diving/1.jpeg" alt="">
+              </div>
+              <div class="c-article__main">
+                <p class="c-article__name" id="NFTOwnerAddress-2">Seller name</p>
+                <p class="c-article__title">ダイビング体験券</p>
+                <p id="price-2" class="c-article__price"><img src="./images/icon-price.png" alt="">0.34<span class="u-unit">ETH</span></p>
+              </div>
+            </a>
+            <div class="c-article__button">
+              <a id="item-2" href="#" class="c-btn is-sold" disabled>Sold</a>
             </div>
-        </header>
-        <main>
-
-
-            <div class="container">
-                <div id="light" >
-
-                <a class="boxclose" id="boxclose" onclick="lightbox_close();"></a>
-                  <video id="VisaChipCardVideo" width="600" controls>
-                      <!--<source id="video_url" src="" type="video/mp4">-->
-                      <!--Browser does not support <video> tag -->
-                    </video>
-                    <div id="VisaChipCardDescription" style="text-align: center"></div>
-                  </div>
-
-                <div id="fade" onClick="lightbox_close();"></div>
-                <h1 class="NFT-title" data-aos="fade-up" data-aos-duration="800">
-                    NFT Collection
-                </h1>
-                <article class="NFT-grid">
-                    <!--1組 Start-->
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000">
-                        <div class="item-body" onclick="lightbox_open(1);">
-                            <div class="item-img-mask">
-                                <img src="video/1/1.png" class="item-img">
-                            </div>
-                            <div class="item-text">
-                                <div>
-                                    <div class="author">１kg引換券</div>
-                                    <div class="name">宮里農園もやし</div>
-                                </div>
-                                <div class="price"><img id="icon-1" src="img/coin.svg"><span class="" id="price-1">56</span></div>
-                            </div>
-                        </div>
-                        <div class="item-footer">
-                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-1">
-                            <input type="button" value="Buy" name="Buy" class="item-btn" id="item-1">
-                        </div>
-                    </div>
-                    <!--1組 End-->
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
-                        <div class="item-body" onclick="lightbox_open(2);">
-                            <div class="item-img-mask">
-                                <img src="video/2/2.png" class="item-img">
-                            </div>
-                            <div class="item-text">
-                                <div>
-                                    <div class="author">開拓権利</div>
-                                    <div class="name">大宜見村</div>
-                                </div>
-                                <div class="price"><img id="icon-2" src="img/coin.svg"><span class="" id="price-2">10.34</span></div>
-                            </div>
-                        </div>
-                        <div class="item-footer">
-                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-2">
-                            <input type="button" value="Buy" name="Buy" class="item-btn" id="item-2">
-                        </div>
-                    </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
-                        <div class="item-body" onclick="lightbox_open(3);">
-                            <div class="item-img-mask">
-                                <img src="video/3/3.png" class="item-img">
-                            </div>
-                            <div class="item-text">
-                                <div>
-                                    <div class="author">1頭更換券</div>
-                                    <div class="name">アグー豚</div>
-                                </div>
-                                <div class="price"><img id="icon-3" src="img/coin.svg"><span class="" id="price-3">15</span></div>
-                            </div>
-                        </div>
-                        <div class="item-footer">
-                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-3">
-                            <input type="button" value="Sold" name="Sold" class="item-btn" id="item-3">
-                        </div>
-                    </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
-                        <div class="item-body" onclick="lightbox_open(4);">
-                            <div class="item-img-mask">
-                                <img src="video/4/4.png" class="item-img">
-                            </div>
-                            <div class="item-text">
-                                <div>
-                                    <div class="author">No.3495</div>
-                                    <div class="name">石垣牛タン引換券</div>
-                                </div>
-                                <div class="price"><img id="icon-4" src="img/coin.svg"><span class="" id="price-4">3.66</span></div>
-                            </div>
-                        </div>
-                        <div class="item-footer">
-                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-4">
-                            <input type="button" value="Sold" name="Sold" class="item-btn" id="item-4">
-                        </div>
-                    </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
-                        <div class="item-body" onclick="lightbox_open(5);">
-                            <div class="item-img-mask">
-                                <img src="video/5/5.png" class="item-img">
-                            </div>
-                            <div class="item-text">
-                                <div>
-                                    <div class="author">2㎏交換券</div>
-                                    <div class="name">佐藤農園ゴーヤ</div>
-                                </div>
-                                <div class="price"><img id="icon-5" src="img/coin.svg"><span class="" id="price-5">0.52</span></div>
-                            </div>
-                        </div>
-                        <div class="item-footer">
-                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-5">
-                            <input type="button" value="Buy" name="Buy" class="item-btn" id="item-5">
-                        </div>
-                    </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
-                        <div class="item-body" onclick="lightbox_open(6);">
-                            <div class="item-img-mask">
-                                <img src="video/6/6.png" class="item-img">
-                            </div>
-                            <div class="item-text">
-                                <div>
-                                    <div class="author">10箱</div>
-                                    <div class="name">限定紅芋タルト</div>
-                                </div>
-                                <div class="price"><img id="icon-6" src="img/coin.svg"><span class="" id="price-6">0.09</span></div>
-                            </div>
-                        </div>
-                        <div class="item-footer">
-                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-6">
-                            <input type="button" value="Sold" name="Sold" class="item-btn" id="item-6">
-                        </div>
-                    </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
-                        <div class="item-body" onclick="lightbox_open(7);">
-                            <div class="item-img-mask">
-                                <img src="video/7/7.png" class="item-img">
-                            </div>
-                            <div class="item-text">
-                                <div>
-                                    <div class="author">交換券</div>
-                                    <div class="name">限定琉球グラス</div>
-                                </div>
-                                <div class="price"><img id="icon-7" src="img/coin.svg"><span class="" id="price-7">12.1</span></div>
-                            </div>
-                        </div>
-                        <div class="item-footer">
-                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-7">
-                            <input type="button" value="Buy" name="Buy" class="item-btn" id="item-7">
-                        </div>
-                    </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
-                        <div class="item-body" onclick="lightbox_open(8);">
-                            <div class="item-img-mask">
-                                <img src="video/8/8.png" class="item-img">
-                            </div>
-                            <div class="item-text">
-                                <div>
-                                    <div class="author">1㎏交換券</div>
-                                    <div class="name">天然もずく</div>
-                                </div>
-                                <div class="price"><img id="icon-8" src="img/coin.svg"><span class="" id="price-8">0.66</span></div>
-                            </div>
-                        </div>
-                        <div class="item-footer">
-                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-8">
-                            <input type="button" value="Sold" name="Sold" class="item-btn" id="item-8">
-                        </div>
-                    </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
-                        <div class="item-body" onclick="lightbox_open(9);">
-                            <div class="item-img-mask">
-                                <img src="video/9/9.png" class="item-img">
-                            </div>
-                            <div class="item-text">
-                                <div>
-                                    <div class="author">交換券</div>
-                                    <div class="name">限定ちんすこう</div>
-                                </div>
-                                <div class="price"><img id="icon-9" src="img/coin.svg"><span class="" id="price-9">0.76</span></div>
-                            </div>
-                        </div>
-                        <div class="item-footer">
-                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-9">
-                            <input type="button" value="Buy" name="Buy" class="item-btn" id="item-9">
-                        </div>
-                    </div>
-                    <div class="NFT-item" data-aos="fade-up" data-aos-duration="1000" >
-                        <div class="item-body" onclick="lightbox_open(10);">
-                            <div class="item-img-mask">
-                                <img src="video/10/10.png" class="item-img">
-                            </div>
-                            <div class="item-text">
-                                <div>
-                                    <div class="author">2㎏交換券</div>
-                                    <div class="name">海ぶどう</div>
-                                </div>
-                                <div class="price"><img id="icon-10" src="img/coin.svg"><span class="" id="price-10">1.15</span></div>
-                            </div>
-                        </div>
-                        <div class="item-footer">
-                            <input type="button" value="Transfer" name="Transfer" class="item-transfer-btn" id="transfer-10">
-                            <input type="button" value="Sold" name="Sold" class="item-btn" id="item-10">
-                        </div>
-                    </div>
-                </article>
+          </div>
+        </div>
+        <div class="c-article eat">
+          <div class="c-article__wrap">
+            <a id="item-out-3" href="#ex3" class="c-article__inner" rel="modal:open">
+              <div class="c-article__thumb">
+                <img src="./images/3_restaurant/1.jpeg" alt="">
+              </div>
+              <div class="c-article__main">
+                <p class="c-article__name" id="NFTOwnerAddress-3">Seller name</p>
+                <p class="c-article__title">ライブキッチン体験</p>
+                <p id="price-3" class="c-article__price"><img src="./images/icon-price.png" alt="">0.34<span class="u-unit">ETH</span></p>
+              </div>
+            </a>
+            <div class="c-article__button">
+              <a id="item-3" href="#" class="c-btn is-sold" disabled>Sold</a>
             </div>
-        </main>
+          </div>
+        </div>
+        <div class="c-article exp">
+          <div class="c-article__wrap">
+            <a id="item-out-4" href="#ex4" class="c-article__inner" rel="modal:open">
+              <div class="c-article__thumb">
+                <img src="./images/4_fitness/1.jpeg" alt="">
+              </div>
+              <div class="c-article__main">
+                <p class="c-article__name" id="NFTOwnerAddress-4">Seller name</p>
+                <p class="c-article__title">フィットネスクラブ会員券</p>
+                <p id="price-4" class="c-article__price"><img src="./images/icon-price.png" alt="">0.34<span class="u-unit">ETH</span></p>
+              </div>
+            </a>
+            <div class="c-article__button">
+              <a id="item-4" href="#" class="c-btn is-sold" disabled>Sold</a>
+            </div>
+          </div>
+        </div>
+        <div class="c-article exp">
+          <div class="c-article__wrap">
+            <a id="item-out-5" href="#ex5" class="c-article__inner" rel="modal:open">
+              <div class="c-article__thumb">
+                <img src="./images/5_beach/1.jpeg" alt="">
+              </div>
+              <div class="c-article__main">
+                <p class="c-article__name" id="NFTOwnerAddress-5">Seller name</p>
+                <p class="c-article__title">カヌチャビーチ入場権</p>
+                <p id="price-5" class="c-article__price"><img src="./images/icon-price.png" alt="">0.34<span class="u-unit">ETH</span></p>
+              </div>
+            </a>
+            <div class="c-article__button">
+              <a id="item-5" href="#" class="c-btn is-sold" disabled>Sold</a>
+              <!--<a href="#" class="c-btn is-own">Own</a>-->
+            </div>
+          </div>
+        </div>
+        <div class="c-article exp">
+          <div class="c-article__wrap">
+            <a id="item-out-6" href="#ex6" class="c-article__inner" rel="modal:open">
+              <div class="c-article__thumb">
+                <img src="./images/6_jetpack/1.jpeg" alt="">
+              </div>
+              <div class="c-article__main">
+                <p class="c-article__name" id="NFTOwnerAddress-6">Seller name</p>
+                <p class="c-article__title">ジェットパック体験権</p>
+                <p id="price-6" class="c-article__price"><img src="./images/icon-price.png" alt="">0.34<span class="u-unit">ETH</span></p>
+              </div>
+            </a>
+            <div class="c-article__button">
+              <a id="item-6" href="#" class="c-btn is-sold" disabled>Sold</a>
+            </div>
+          </div>
+        </div>
+        <div class="c-article eat">
+          <div class="c-article__wrap">
+            <a id="item-out-7" href="#ex7" class="c-article__inner" rel="modal:open">
+              <div class="c-article__thumb">
+                <img src="./images/7_BBQ/1.jpeg" alt="">
+              </div>
+              <div class="c-article__main">
+                <p id="NFTOwnerAddress-7" class="c-article__name">Seller name</p>
+                <p class="c-article__title">バーベキューテラス会員権</p>
+                <p id="price-7" class="c-article__price"><img src="./images/icon-price.png" alt="">0.34<span class="u-unit">ETH</span></p>
+              </div>
+            </a>
+            <div class="c-article__button">
+              <a id="item-7" href="#" class="c-btn is-sold" disabled>Sold</a>
+            </div>
+          </div>
+        </div>
+        <div class="c-article eat">
+          <div class="c-article__wrap">
+            <a id="item-out-8" href="#ex8" class="c-article__inner" rel="modal:open">
+              <div class="c-article__thumb">
+                <img src="./images/8_cuisine/1.jpeg" alt="">
+              </div>
+              <div class="c-article__main">
+                <p id="NFTOwnerAddress-8" class="c-article__name">Seller name</p>
+                <p class="c-article__title">広東名菜 龍宮 会員権</p>
+                <p id="price-8" class="c-article__price"><img src="./images/icon-price.png" alt="">0.34<span class="u-unit">ETH</span></p>
+              </div>
+            </a>
+            <div class="c-article__button">
+              <a id="item-8" href="#" class="c-btn is-sold" disabled>Sold</a>
+            </div>
+          </div>
+        </div>
+        <div class="c-article exp">
+          <div class="c-article__wrap">
+            <a id="item-out-9" href="#ex9" class="c-article__inner" rel="modal:open">
+              <div class="c-article__thumb">
+                <img src="./images/9_pool/1.jpeg" alt="">
+              </div>
+              <div class="c-article__main">
+                <p id="NFTOwnerAddress-9" class="c-article__name">Seller name</p>
+                <p class="c-article__title">ガーデンプール 入場権</p>
+                <p id="price-9" class="c-article__price"><img src="./images/icon-price.png" alt="">0.34<span class="u-unit">ETH</span></p>
+              </div>
+            </a>
+            <div class="c-article__button">
+              <a id="item-9" href="#" class="c-btn is-sold" disabled>Sold</a>
+            </div>
+          </div>
+        </div>
+        <div class="c-article exp">
+          <div class="c-article__wrap">
+            <a id="item-out-10" href="#ex10" class="c-article__inner" rel="modal:open">
+              <div class="c-article__thumb">
+                <img src="./images/10_illumination/1.jpeg" alt="">
+              </div>
+              <div class="c-article__main">
+                <p id="NFTOwnerAddress-10" class="c-article__name">Seller name</p>
+                <p class="c-article__title">イルミzネーション観賞権</p>
+                <p id="price-10" class="c-article__price"><img src="./images/icon-price.png" alt="">0.34<span class="u-unit">ETH</span></p>
+              </div>
+            </a>
+            <div class="c-article__button">
+              <a id="item-10" href="#" class="c-btn is-sold" disabled>Sold</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <footer>© 2022 Metabox. </footer>
-    <script src="js/script.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
+  </div>
+  <!-- Modal HTML embedded directly into document -->
+  <div id="ex1" class="c-modal modal">
+    <div class="c-modal__wrap">
+      <h3 class="c-modal__title">ゴルフコース会員権</h3>
+      <div class="c-modal__thumb">
+        <img src="./images/1_golf/1.jpeg" alt="">
+      </div>
+      <p class="c-modal__text">
+        ゴルフ好きも憧れるダイナミックコースの会員券。<br>
+        80万坪という国内トップクラスのスケールと、リゾートならではの眺望。
+      </p>
+      <a id="item-in-1" href="#" class="c-btn is-sold" disabled>Sold</a>
+    </div>
+  </div>
+  <div id="ex2" class="c-modal modal">
+    <div class="c-modal__wrap">
+      <h3 class="c-modal__title">ダイビング体験券</h3>
+      <div class="c-modal__thumb">
+        <img src="./images/2_diving/1.jpeg" alt="">
+      </div>
+      <p class="c-modal__text">
+        ダイビング体験権利。色とりどりの熱帯魚があなたの目の前5cmのところにまでやってきます。<br>徹底した安全サポートで、初めての方や泳ぎの苦手な方も安心してご参加いただけます。
+      </p>
+      <a id="item-in-2" href="#" class="c-btn is-sold" disabled>Sold</a>
+    </div>
+  </div>
+  <div id="ex3" class="c-modal modal">
+    <div class="c-modal__wrap">
+      <h3 class="c-modal__title">ライブキッチン体験</h3>
+      <div class="c-modal__thumb">
+        <img src="./images/3_restaurant/1.jpeg" alt="">
+      </div>
+      <p class="c-modal__text">
+        ライブキッチン「HAMAKAZE」(和食レストラン 神着 内)での食事権。<br>
+        目にも舌にも贅沢なライブキッチンを特別な一室でご堪能いただけます。 華麗なる手さばきにより厳選食材が逸品に変化する、五感が潤うひと時に。
+      </p>
+      <a id="item-in-3" href="#" class="c-btn is-sold" disabled>Sold</a>
+    </div>
+  </div>
+  <div id="ex4" class="c-modal modal">
+    <div class="c-modal__wrap">
+      <h3 class="c-modal__title">フィットネスクラブ会員券</h3>
+      <div class="c-modal__thumb">
+        <img src="./images/4_fitness/1.jpeg" alt="">
+      </div>
+      <p class="c-modal__text">
+        フィットネス クラブ22の１年間利用権。<br>
+        元メジャーリーガーの佐々木主浩プロデュースによる本格的なフィットネスクラブ。無理のない効果的なトレーニングが可能です。
+      </p>
+      <a id="item-in-4" href="#" class="c-btn is-sold" disabled>Sold</a>
+    </div>
+  </div>
+  <div id="ex5" class="c-modal modal">
+    <div class="c-modal__wrap">
+      <h3 class="c-modal__title">カヌチャビーチ入場権</h3>
+      <div class="c-modal__thumb">
+        <img src="./images/5_beach/1.jpeg" alt="">
+      </div>
+      <p class="c-modal__text">
+          ゴルフ好きも憧れるダイナミックコースの会員券。<br>
+          80万坪という国内トップクラスのスケールと、リゾートならではの眺望。お楽しみください。
+      </p>
+      <a id="item-in-5" href="#" class="c-btn is-sold" disabled>Sold</a>
+    </div>
+  </div>
+  <div id="ex6" class="c-modal modal">
+    <div class="c-modal__wrap">
+      <h3 class="c-modal__title">ジェットパック体験権</h3>
+      <div class="c-modal__thumb">
+        <img src="./images/6_jetpack/1.jpeg" alt="">
+      </div>
+      <p class="c-modal__text">
+        ジェットパックの体験権。背負ったマシーンからの水圧を利用して、身体ごと空中に浮き上がるジェットパック。 空中をふわりふわりと浮く独特の感覚をぜひお楽しみください。
+      </p>
+      <a id="item-in-6" href="#" class="c-btn is-sold" disabled>Sold</a>
+    </div>
+  </div>
+  <div id="ex7" class="c-modal modal">
+    <div class="c-modal__wrap">
+      <h3 class="c-modal__title">バーベキューテラス会員権</h3>
+      <div class="c-modal__thumb">
+        <img src="./images/7_BBQ/1.jpeg" alt="">
+      </div>
+      <p class="c-modal__text">
+        バーベキューテラス クーワクーワ食事権。<br>
+        プールサイドの開放的な空間で自由に楽しむカジュアルスタイル。最大80名様までご利用いただけますので、賑やかなパーティーにもぴったり。
+      </p>
+      <a id="item-in-7" href="#" class="c-btn is-sold" disabled>Sold</a>
+    </div>
+  </div>
+  <div id="ex8" class="c-modal modal">
+    <div class="c-modal__wrap">
+      <h3 class="c-modal__title">広東名菜 龍宮 会員権</h3>
+      <div class="c-modal__thumb">
+        <img src="./images/8_cuisine/1.jpeg" alt="">
+      </div>
+      <p class="c-modal__text">
+        広東名菜 龍宮 食事権。<br>
+        地元食材をふんだんに使い、味はもちろん彩りの美しさにもこだわった本格派。<br>
+        定番からオリジナリティ溢れるメニューまで、豊富な絶品中華をお届けします。
+      </p>
+      <a id="item-in-8" href="#" class="c-btn is-sold" disabled>Sold</a>
+    </div>
+  </div>
+  <div id="ex9" class="c-modal modal">
+    <div class="c-modal__wrap">
+      <h3 class="c-modal__title">ガーデンプール 入場権</h3>
+      <div class="c-modal__thumb">
+        <img src="./images/9_pool/1.jpeg" alt="">
+      </div>
+      <p class="c-modal__text">
+        ガーデンプール 入場権。<br>
+        ディープブルーの水面が美しいガーデンプール。琉球石灰岩のエントランスや美しいデザインのパラソルが、リゾート感を盛り上げます。
+      </p>
+      <a id="item-in-9" href="#" class="c-btn is-sold" disabled>Sold</a>
+    </div>
+  </div>
+  <div id="ex10" class="c-modal modal">
+    <div class="c-modal__wrap">
+      <h3 class="c-modal__title">イルミzネーション観賞権</h3>
+      <div class="c-modal__thumb">
+        <img src="./images/10_illumination/1.jpeg" alt="">
+      </div>
+      <p class="c-modal__text">
+          イルミネーション 観賞権。<br>
+          心の休息を与え、体が喜ぶ食物を食べ、忘れていた日常を取り戻せる。<br>
+          この場所は楽園であり続けるためにこの冬も感動と幸福の光を灯します。
+      </p>
+      <a id="item-in-10" href="#" class="c-btn is-sold" disabled>Sold</a>
+    </div>
+  </div>
+
+</main>
+
+<!--Footer-->
+<footer id="footer">
+  <div class="c-footer">
+    <p class="c-footer__text">
+      © 2022 Metabox.
+    </p>
+  </div>
+</footer>
+
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="js/script.js"></script>
+<!-- Initialize Swiper -->
+<script>
+  const buildSwiperSlider = sliderElm => {
+      const sliderIdentifier = sliderElm.dataset.id;
+      console.log(sliderElm.id)
+      var swiper = new Swiper(`#${sliderElm.id}-nav`, {
+        loop: true,
+        spaceBetween: 10,
+        slidesPerView: 5,
+        freeMode: true,
+        watchSlidesProgress: true,
+      });
+      var swiper2 = new Swiper(`#${sliderElm.id}`, {
+        loop: true,
+        spaceBetween: 10,
+        navigation: {
+          nextEl: `#${sliderElm.id} .swiper-button-next`,
+          prevEl: `#${sliderElm.id} .swiper-button-prev`
+        },
+        thumbs: {
+          swiper: swiper,
+        },
+      });
+  }
 
+  const allSliders = document.querySelectorAll('.swiper');
+  allSliders.forEach(slider => buildSwiperSlider(slider));
+
+</script>
 </html>
